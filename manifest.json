@@ -1,0 +1,36 @@
+{
+  "name": "Aqario — عقارات المغرب",
+  "short_name": "Aqario",
+  "description": "منصة العقارات الأولى في المغرب — بيع، كراء، وكالات موثقة",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07050F",
+  "theme_color": "#7C3AED",
+  "lang": "ar",
+  "dir": "rtl",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "images/icon-72.png",  "sizes": "72x72",   "type": "image/png" },
+    { "src": "images/icon-96.png",  "sizes": "96x96",   "type": "image/png" },
+    { "src": "images/icon-128.png", "sizes": "128x128", "type": "image/png" },
+    { "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [
+    { "src": "images/screenshot-1.png", "sizes": "390x844", "type": "image/png" },
+    { "src": "images/screenshot-2.png", "sizes": "390x844", "type": "image/png" }
+  ],
+  "categories": ["real estate", "business", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "بحث عن شقة",
+      "url": "/?type=شقة",
+      "description": "ابحث عن شقة في المغرب"
+    },
+    {
+      "name": "نشر إعلان",
+      "url": "/publish.html",
+      "description": "انشر إعلانك في 60 ثانية"
+    }
+  ]
+}

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Aqario — منصة العقارات الأولى في المغرب. ابحث عن شقة، فيلا، أرض أو محل تجاري بسهولة وثقة.">
+<meta property="og:title" content="Aqario — عقارات المغرب">
+<meta property="og:description" content="منصة عقارية موثوقة للمغرب — بيع، كراء، وكالات معتمدة">
+<meta property="og:image" content="images/og-cover.png">
+<title>Aqario — عقارات المغرب</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">🏠</div>
+      <span>Aqario</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#search">بحث</a>
+      <a href="#categories">الفئات</a>
+      <a href="#agencies">الوكالات</a>
+      <a href="#how">كيف يعمل</a>
+    </div>
+    <div class="nav-right">
+      <a href="#search" class="btn-outline">تسجيل الدخول</a>
+      <a href="#search" class="btn-primary">＋ نشر إعلان</a>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">🇲🇦 منصة عقارية مغربية موثوقة</div>
+    <h1 class="hero-title">
+      ابحث عن عقارك<br>
+      <span class="gradient-text">في كل المغرب</span>
+    </h1>
+    <p class="hero-sub">أكثر من 4,800 إعلان موثق — شقق، فيلات، أراضي ومحلات تجارية في 47 مدينة</p>
+
+    <!-- Search Box -->
+    <div class="search-card" id="search">
+      <div class="search-tabs">
+        <button class="stab active" onclick="switchTab(this,'sale')">🏷 للبيع</button>
+        <button class="stab" onclick="switchTab(this,'rent')">🔑 للكراء</button>
+        <button class="stab" onclick="switchTab(this,'agencies')">🏢 وكالات</button>
+      </div>
+      <div class="search-fields">
+        <div class="sf-group">
+          <label>🏙 المدينة</label>
+          <select id="citySelect">
+            <option value="">كل المدن</option>
+            <option>الدار البيضاء</option>
+            <option>الرباط</option>
+            <option>مراكش</option>
+            <option>فاس</option>
+            <option>طنجة</option>
+            <option>أكادير</option>
+            <option>مكناس</option>
+            <option>وجدة</option>
+          </select>
+        </div>
+        <div class="sf-group">
+          <label>🏠 النوع</label>
+          <select id="typeSelect">
+            <option value="">كل الأنواع</option>
+            <option>شقة</option>
+            <option>فيلا</option>
+            <option>أرض</option>
+            <option>محل تجاري</option>
+            <option>مكتب</option>
+          </select>
+        </div>
+        <div class="sf-group">
+          <label>💰 السعر الأقصى</label>
+          <select id="priceSelect">
+            <option value="">بدون حد</option>
+            <option>500,000 MAD</option>
+            <option>1,000,000 MAD</option>
+            <option>2,000,000 MAD</option>
+            <option>5,000,000 MAD</option>
+            <option>+5,000,000 MAD</option>
+          </select>
+        </div>
+        <button class="search-btn" onclick="doSearch()">🔍 بحث</button>
+      </div>
+    </div>
+
+    <!-- Quick stats -->
+    <div class="hero-stats">
+      <div class="hs"><span class="hs-num" data-target="4800">0</span><span class="hs-lbl">إعلان نشط</span></div>
+      <div class="hs-div"></div>
+      <div class="hs"><span class="hs-num" data-target="340">0</span><span class="hs-lbl">وكالة معتمدة</span></div>
+      <div class="hs-div"></div>
+      <div class="hs"><span class="hs-num" data-target="47">0</span><span class="hs-lbl">مدينة</span></div>
+      <div class="hs-div"></div>
+      <div class="hs"><span class="hs-num" data-target="12400">0</span><span class="hs-lbl">مستخدم</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CATEGORIES ══ -->
+<section class="section" id="categories">
+  <div class="container">
+    <div class="section-head">
+      <h2>🏷 تصفح حسب الفئة</h2>
+      <p>اختر نوع العقار الذي تبحث عنه</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="filterCat('شقة')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#1a0d3d,#2d1b69)">🏢</div>
+        <div class="cat-name">شقق</div>
+        <div class="cat-count">1,840 إعلان</div>
+      </div>
+      <div class="cat-card" onclick="filterCat('فيلا')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#0a1f35,#162f4f)">🏡</div>
+        <div class="cat-name">فيلات</div>
+        <div class="cat-count">620 إعلان</div>
+      </div>
+      <div class="cat-card" onclick="filterCat('أرض')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#0d1f0a,#183015)">🌿</div>
+        <div class="cat-name">أراضي</div>
+        <div class="cat-count">930 إعلان</div>
+      </div>
+      <div class="cat-card" onclick="filterCat('تجاري')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#250f00,#3d1a00)">🏪</div>
+        <div class="cat-name">تجاري</div>
+        <div class="cat-count">480 إعلان</div>
+      </div>
+      <div class="cat-card" onclick="filterCat('مكتب')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#1a1a0a,#2f2a15)">🏛</div>
+        <div class="cat-name">مكاتب</div>
+        <div class="cat-count">290 إعلان</div>
+      </div>
+      <div class="cat-card" onclick="filterCat('سياحي')">
+        <div class="cat-icon" style="background:linear-gradient(135deg,#1a0a2e,#300f55)">🏨</div>
+        <div class="cat-name">سياحي</div>
+        <div class="cat-count">185 إعلان</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURED LISTINGS ══ -->
+<section class="section section-dark" id="listings">
+  <div class="container">
+    <div class="section-head">
+      <h2>⭐ إعلانات مميزة</h2>
+      <p>أحدث العقارات الموثقة على المنصة</p>
+    </div>
+    <div class="listings-grid" id="listingsGrid">
+      <!-- rendered by JS -->
+    </div>
+    <div class="center-btn">
+      <a href="#search" class="btn-primary-lg">عرض جميع الإعلانات ←</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="section" id="how">
+  <div class="container">
+    <div class="section-head">
+      <h2>⚡ كيف يعمل Aqario؟</h2>
+      <p>بسيط، سريع، وموثوق</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">🔍</div>
+        <h3>ابحث على الخريطة</h3>
+        <p>استخدم الخريطة التفاعلية للبحث بالموقع الجغرافي الدقيق في مدينتك</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">✅</div>
+        <h3>عقارات موثقة فقط</h3>
+        <p>كل إعلان مر بـ 3 مراحل توثيق — هاتف، هوية، ووثيقة الملكية</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">💬</div>
+        <h3>تواصل مباشرة</h3>
+        <p>تواصل مع المالك مباشرة عبر واتساب أو مكالمة — بدون وسيط</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon">🏠</div>
+        <h3>انشر إعلانك في 60 ثانية</h3>
+        <p>3 خطوات فقط لنشر إعلانك — وظاهر على الخريطة فور الموافقة</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TRUST BADGES ══ -->
+<section class="trust-section">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <span class="trust-icon">🔐</span>
+        <div>
+          <div class="trust-title">توثيق 3 مراحل</div>
+          <div class="trust-sub">هاتف + هوية + ملكية</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">🤖</span>
+        <div>
+          <div class="trust-title">AI لمنع التكرار</div>
+          <div class="trust-sub">خوارزمية pHash ذكية</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">💰</span>
+        <div>
+          <div class="trust-title">السعر العادل مجاناً</div>
+          <div class="trust-sub">تقدير AI لكل عقار</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">🇲🇦</span>
+        <div>
+          <div class="trust-title">100% مغربي</div>
+          <div class="trust-sub">47 مدينة، MAD، عربية كاملة</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AGENCIES ══ -->
+<section class="section" id="agencies">
+  <div class="container">
+    <div class="section-head">
+      <h2>🏢 وكالات معتمدة</h2>
+      <p>340+ وكالة عقارية موثقة ومرخصة في المغرب</p>
+    </div>
+    <div class="agencies-grid">
+      <div class="agency-mini">
+        <div class="am-logo" style="background:linear-gradient(135deg,#1a0d3d,#2d1b69)">🏢</div>
+        <div class="am-name">Prestige Immobilier</div>
+        <div class="am-city">الدار البيضاء</div>
+        <div class="am-rating">⭐ 4.9</div>
+      </div>
+      <div class="agency-mini">
+        <div class="am-logo" style="background:linear-gradient(135deg,#0a1f35,#162f4f)">🏛</div>
+        <div class="am-name">Rabat Realty</div>
+        <div class="am-city">الرباط</div>
+        <div class="am-rating">⭐ 4.8</div>
+      </div>
+      <div class="agency-mini">
+        <div class="am-logo" style="background:linear-gradient(135deg,#2a1200,#4a2000)">🌴</div>
+        <div class="am-name">Marrakech Medina</div>
+        <div class="am-city">مراكش</div>
+        <div class="am-rating">⭐ 4.7</div>
+      </div>
+      <div class="agency-mini">
+        <div class="am-logo" style="background:linear-gradient(135deg,#002a1a,#004a2a)">⚓</div>
+        <div class="am-name">Tanger Bay</div>
+        <div class="am-city">طنجة</div>
+        <div class="am-rating">⭐ 4.6</div>
+      </div>
+    </div>
+    <div class="center-btn">
+      <a href="#" class="btn-outline-lg">عرض كل الوكالات ←</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-orb"></div>
+    <h2>انشر إعلانك مجاناً اليوم 🚀</h2>
+    <p>انضم لـ +12,400 مستخدم يثقون في Aqario</p>
+    <div class="cta-btns">
+      <a href="#search" class="btn-primary-lg">＋ نشر إعلان مجاني</a>
+      <a href="#how" class="btn-ghost-lg">كيف يعمل؟</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:12px">
+          <div class="logo-mark">🏠</div>
+          <span>Aqario</span>
+        </div>
+        <p>منصة العقارات الأولى في المغرب — موثوقة، سريعة، وشفافة.</p>
+        <div class="social-row">
+          <a href="#" class="soc">📘</a>
+          <a href="#" class="soc">📸</a>
+          <a href="#" class="soc">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>الموقع</h4>
+        <a href="#search">بحث</a>
+        <a href="#categories">الفئات</a>
+        <a href="#agencies">الوكالات</a>
+        <a href="#listings">الإعلانات</a>
+      </div>
+      <div class="footer-col">
+        <h4>الشركة</h4>
+        <a href="#">من نحن</a>
+        <a href="#">تواصل معنا</a>
+        <a href="privacy.html">سياسة الخصوصية</a>
+        <a href="#">الشروط والأحكام</a>
+      </div>
+      <div class="footer-col">
+        <h4>المدن</h4>
+        <a href="#">الدار البيضاء</a>
+        <a href="#">الرباط</a>
+        <a href="#">مراكش</a>
+        <a href="#">فاس</a>
+        <a href="#">طنجة</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Aqario. جميع الحقوق محفوظة.</span>
+      <span>🇲🇦 صُنع في المغرب</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aqario – الوكالات العقارية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07050F; --bg2:#0C0918; --bg3:#110D22;
+  --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.07);
+  --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.14);
+  --primary:#7C3AED; --accent:#4F46E5; --teal:#06B6D4;
+  --gold:#F59E0B; --green:#10B981; --red:#EF4444;
+  --text:#F0EFF6; --muted:#8B8BAE; --muted2:#4E4E6E;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 85% 0%,rgba(124,58,237,.18) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 40% at 0% 85%,rgba(6,182,212,.1) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 30% at 50% 50%,rgba(79,70,229,.06) 0%,transparent 60%);
+}
+
+/* ══ NAV ══════════════════════════════════════════════ */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;gap:0;
+  padding:0 40px;height:62px;
+  background:rgba(7,5,15,.9);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  display:flex;align-items:center;gap:8px;margin-left:40px;
+  font-family:'Tajawal',sans-serif;font-size:21px;font-weight:900;
+  background:linear-gradient(135deg,#A78BFA,#67E8F9);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-decoration:none;
+}
+.logo-mark{
+  width:30px;height:30px;border-radius:8px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+  -webkit-text-fill-color:initial;
+}
+.nav-links{display:flex;gap:0;flex:1;}
+.nl{
+  padding:0 16px;height:62px;display:flex;align-items:center;
+  font-size:13px;font-weight:600;color:var(--muted);
+  cursor:pointer;border-bottom:2px solid transparent;
+  transition:all .18s;text-decoration:none;
+}
+.nl:hover{color:var(--text);}
+.nl.active{color:#C4B5FD;border-bottom-color:var(--primary);}
+.nav-right{display:flex;align-items:center;gap:10px;margin-right:auto;}
+.n-ico{
+  width:34px;height:34px;border-radius:9px;border:1px solid var(--border);
+  background:var(--card);display:flex;align-items:center;justify-content:center;
+  font-size:15px;cursor:pointer;transition:all .18s;position:relative;
+}
+.n-ico:hover{border-color:rgba(124,58,237,.35);}
+.n-dot{position:absolute;top:7px;right:7px;width:6px;height:6px;background:var(--red);border-radius:50%;border:1.5px solid var(--bg);}
+.cta-btn{
+  padding:8px 16px;border-radius:9px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;-webkit-text-fill-color:#fff;
+  font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;
+  box-shadow:0 4px 14px rgba(124,58,237,.35);transition:all .2s;
+}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,58,237,.5);}
+
+/* ══ HERO ══════════════════════════════════════════════ */
+.hero{
+  position:relative;z-index:1;
+  padding:52px 40px 40px;
+  max-width:1200px;margin:0 auto;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;
+  background:rgba(124,58,237,.11);border:1px solid rgba(124,58,237,.25);
+  color:#C4B5FD;margin-bottom:16px;
+}
+.hero h1{
+  font-family:'Tajawal',sans-serif;font-size:38px;font-weight:900;
+  line-height:1.2;margin-bottom:10px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,#A78BFA 0%,#67E8F9 50%,#34D399 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p{font-size:15px;color:var(--muted);max-width:520px;line-height:1.7;margin-bottom:28px;}
+.hero-stats{display:flex;gap:28px;}
+.hs{text-align:center;}
+.hs-num{font-family:'Tajawal',sans-serif;font-size:24px;font-weight:900;background:linear-gradient(135deg,#A78BFA,#67E8F9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hs-lbl{font-size:11px;color:var(--muted);}
+
+/* ══ FILTER BAR ════════════════════════════════════════ */
+.filter-bar{
+  position:relative;z-index:5;
+  max-width:1200px;margin:0 auto;
+  padding:0 40px 28px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.search-box{
+  display:flex;align-items:center;gap:8px;flex:1;min-width:240px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:9px 14px;
+}
+.search-box input{
+  background:transparent;border:none;outline:none;
+  font-family:'Cairo',sans-serif;font-size:13px;color:var(--text);width:100%;
+}
+.search-box input::placeholder{color:var(--muted);}
+.fchip{
+  padding:8px 14px;border-radius:20px;font-size:12px;font-weight:700;
+  border:1px solid var(--border);background:rgba(255,255,255,.03);
+  color:var(--muted);cursor:pointer;transition:all .18s;white-space:nowrap;
+  font-family:'Cairo',sans-serif;
+}
+.fchip:hover{border-color:rgba(124,58,237,.3);color:var(--text);}
+.fchip.on{background:rgba(124,58,237,.14);border-color:rgba(124,58,237,.35);color:#C4B5FD;}
+.sort-sel{
+  padding:8px 12px;border-radius:10px;
+  background:rgba(255,255,255,.05);border:1px solid var(--border);
+  color:var(--muted);font-family:'Cairo',sans-serif;font-size:12px;
+  cursor:pointer;outline:none;
+}
+.sort-sel option{background:#0C0918;}
+
+/* ══ MAIN GRID ══════════════════════════════════════════ */
+.page-body{
+  position:relative;z-index:1;
+  max-width:1200px;margin:0 auto;
+  padding:0 40px 80px;
+  display:grid;grid-template-columns:1fr 380px;gap:24px;
+}
+
+/* ══ AGENCY CARDS ══════════════════════════════════════ */
+.agencies-list{display:flex;flex-direction:column;gap:16px;}
+.agency-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;cursor:pointer;
+  transition:all .25s;position:relative;
+}
+.agency-card:hover{
+  border-color:rgba(124,58,237,.35);
+  box-shadow:0 8px 32px rgba(0,0,0,.35);
+  transform:translateY(-2px);
+}
+.agency-card.featured{
+  border-color:rgba(245,158,11,.25);
+  background:linear-gradient(135deg,rgba(245,158,11,.05),rgba(255,255,255,.03));
+}
+.agency-card.featured::before{
+  content:'⭐ مميز';
+  position:absolute;top:14px;left:14px;
+  padding:3px 9px;border-radius:20px;font-size:9px;font-weight:700;
+  background:rgba(245,158,11,.18);border:1px solid rgba(245,158,11,.3);
+  color:var(--gold);z-index:2;
+}
+
+/* Card inner */
+.ac-inner{display:flex;gap:0;}
+
+/* Logo panel */
+.ac-logo-panel{
+  width:130px;flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;padding:22px 16px;
+  background:rgba(255,255,255,.02);border-left:1px solid var(--border);
+}
+.ac-logo{
+  width:72px;height:72px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;border:1px solid rgba(255,255,255,.08);
+  position:relative;overflow:hidden;
+}
+.ac-logo::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.06),transparent);
+}
+.ac-rating{
+  display:flex;align-items:center;gap:3px;
+  font-size:12px;font-weight:700;color:var(--gold);
+}
+.ac-reviews{font-size:9px;color:var(--muted);}
+
+/* Body */
+.ac-body{flex:1;padding:20px 20px 16px;}
+.ac-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;}
+.ac-name{font-family:'Tajawal',sans-serif;font-size:18px;font-weight:900;margin-bottom:4px;}
+.ac-city{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px;}
+.ac-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+.ab{
+  padding:2px 8px;border-radius:5px;font-size:9px;font-weight:700;
+}
+.ab-ver {background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.2);color:var(--green);}
+.ab-lic {background:rgba(6,182,212,.09);  border:1px solid rgba(6,182,212,.2); color:var(--teal);}
+.ab-new {background:rgba(124,58,237,.1);  border:1px solid rgba(124,58,237,.2);color:#C4B5FD;}
+.ab-top {background:rgba(245,158,11,.09); border:1px solid rgba(245,158,11,.2);color:var(--gold);}
+.ac-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+.ac-stats{display:flex;gap:20px;}
+.as-item{text-align:center;}
+.as-num{font-family:'Tajawal',sans-serif;font-size:16px;font-weight:900;background:linear-gradient(135deg,#A78BFA,#67E8F9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.as-lbl{font-size:9px;color:var(--muted);}
+
+/* Card footer */
+.ac-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 20px;background:rgba(255,255,255,.02);
+  border-top:1px solid var(--border);
+}
+.ac-specs{display:flex;gap:14px;}
+.ac-spec{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:4px;}
+.ac-spec strong{color:var(--text);}
+.ac-actions{display:flex;gap:7px;}
+.ac-btn{
+  padding:6px 14px;border-radius:8px;font-size:11px;font-weight:700;
+  cursor:pointer;transition:all .18s;font-family:'Cairo',sans-serif;
+}
+.ac-btn-primary{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  border:none;color:#fff;-webkit-text-fill-color:#fff;
+}
+.ac-btn-ghost{
+  background:transparent;border:1px solid var(--border);color:var(--muted);
+}
+.ac-btn-ghost:hover{border-color:rgba(124,58,237,.3);color:var(--text);}
+
+/* ══ RIGHT PANEL — Agency Profile ══════════════════════ */
+.profile-panel{
+  position:sticky;top:80px;height:fit-content;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;
+  transition:all .3s;
+}
+
+/* Profile hero */
+.pp-hero{
+  height:100px;position:relative;
+  background:linear-gradient(135deg,#14082e,#1e1060,#0e1a36);
+  overflow:hidden;
+}
+.pp-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(124,58,237,.3),transparent);
+}
+.pp-hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+.pp-logo{
+  position:absolute;bottom:-26px;right:20px;
+  width:56px;height:56px;border-radius:14px;border:3px solid var(--bg);
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+  z-index:2;
+}
+
+/* Profile body */
+.pp-body{padding:34px 20px 20px;}
+.pp-name{font-family:'Tajawal',sans-serif;font-size:20px;font-weight:900;margin-bottom:4px;}
+.pp-loc{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px;margin-bottom:10px;}
+.pp-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
+
+/* Rating big */
+.pp-rating-row{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;border-radius:12px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  margin-bottom:14px;
+}
+.pp-star-big{font-size:28px;}
+.pp-r-num{font-family:'Tajawal',sans-serif;font-size:28px;font-weight:900;color:var(--gold);}
+.pp-r-sub{font-size:10px;color:var(--muted);}
+.pp-stars{display:flex;gap:2px;font-size:13px;margin-top:2px;}
+
+/* Stats grid */
+.pp-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.pp-stat{
+  padding:10px;border-radius:10px;text-align:center;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+}
+.pp-stat-num{font-family:'Tajawal',sans-serif;font-size:18px;font-weight:900;background:linear-gradient(135deg,#A78BFA,#67E8F9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.pp-stat-lbl{font-size:9px;color:var(--muted);margin-top:1px;}
+
+/* Specialties */
+.pp-sec-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.pp-specs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
+.pp-spec-chip{
+  padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);
+}
+
+/* Mini listings */
+.pp-mini-listings{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
+.pml{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 10px;border-radius:9px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  cursor:pointer;transition:all .17s;
+}
+.pml:hover{border-color:rgba(124,58,237,.25);}
+.pml-thumb{
+  width:34px;height:34px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;
+}
+.pmt-a{background:linear-gradient(135deg,#1a0d3d,#2d1b69);}
+.pmt-v{background:linear-gradient(135deg,#0a1f35,#162f4f);}
+.pmt-l{background:linear-gradient(135deg,#0d1f0a,#183015);}
+.pml-info{flex:1;min-width:0;}
+.pml-title{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pml-price{font-size:10px;color:var(--muted);}
+.pml-arrow{font-size:11px;color:var(--muted2);}
+
+/* Contact buttons */
+.pp-contact{display:flex;flex-direction:column;gap:7px;}
+.pp-call{
+  width:100%;padding:11px;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;-webkit-text-fill-color:#fff;
+  font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  box-shadow:0 4px 16px rgba(124,58,237,.4);transition:all .2s;
+}
+.pp-call:hover{transform:translateY(-1px);}
+.pp-row2{display:flex;gap:7px;}
+.pp-wa{
+  flex:1;padding:9px;border-radius:10px;cursor:pointer;
+  background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.25);
+  color:#4ade80;-webkit-text-fill-color:#4ade80;
+  font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  transition:all .18s;
+}
+.pp-wa:hover{background:rgba(37,211,102,.18);}
+.pp-profile-btn{
+  flex:1;padding:9px;border-radius:10px;cursor:pointer;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  color:var(--muted);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;
+  transition:all .18s;
+}
+.pp-profile-btn:hover{border-color:rgba(124,58,237,.3);color:var(--text);}
+
+/* ══ MAP ROW ═══════════════════════════════════════════ */
+.map-row{
+  position:relative;z-index:1;
+  max-width:1200px;margin:0 auto;
+  padding:0 40px 28px;
+}
+.map-section{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  overflow:hidden;
+}
+.ms-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;border-bottom:1px solid var(--border);
+}
+.ms-head h3{font-family:'Tajawal',sans-serif;font-size:15px;font-weight:800;}
+.ms-tabs{display:flex;gap:4px;}
+.mst{
+  padding:4px 12px;border-radius:7px;font-size:11px;font-weight:700;
+  cursor:pointer;color:var(--muted);border:1px solid transparent;transition:all .16s;
+  font-family:'Cairo',sans-serif;
+}
+.mst.on{background:rgba(124,58,237,.14);border-color:rgba(124,58,237,.25);color:#C4B5FD;}
+.map-viz{
+  height:220px;position:relative;
+  background:linear-gradient(135deg,#0c1828,#111827);
+  overflow:hidden;
+}
+.map-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.map-roads{position:absolute;inset:0;}
+.mr-h,.mr-v{position:absolute;background:rgba(255,255,255,.07);}
+.mr-h{height:2px;width:100%;}
+.mr-v{width:2px;height:100%;}
+/* Agency pins */
+.a-pin{position:absolute;display:flex;flex-direction:column;align-items:center;cursor:pointer;}
+.a-pin-circle{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+  border:2px solid rgba(255,255,255,.2);
+  box-shadow:0 4px 16px rgba(0,0,0,.4);
+  transition:transform .2s;
+}
+.a-pin:hover .a-pin-circle{transform:scale(1.15);}
+.a-pin-label{
+  margin-top:4px;padding:2px 7px;border-radius:7px;
+  font-size:9px;font-weight:700;
+  background:rgba(13,10,30,.9);border:1px solid rgba(255,255,255,.1);
+  white-space:nowrap;
+}
+/* City legend */
+.map-legend{
+  position:absolute;bottom:12px;right:12px;
+  background:rgba(13,10,30,.88);backdrop-filter:blur(8px);
+  border:1px solid var(--border);border-radius:10px;padding:10px 12px;
+}
+.ml-title{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.ml-item{display:flex;align-items:center;gap:6px;font-size:10px;margin-bottom:3px;}
+.ml-dot{width:8px;height:8px;border-radius:50%;}
+
+/* ══ ANIMATIONS ══════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%,100%{opacity:.6}50%{opacity:1}}
+
+.agency-card{animation:fadeUp .4s ease both;}
+.agency-card:nth-child(1){animation-delay:.05s}
+.agency-card:nth-child(2){animation-delay:.12s}
+.agency-card:nth-child(3){animation-delay:.19s}
+.agency-card:nth-child(4){animation-delay:.26s}
+.agency-card:nth-child(5){animation-delay:.33s}
+.profile-panel{animation:fadeUp .4s ease .15s both;}
+
+/* Results count */
+.results-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;font-size:13px;
+}
+.rb-count{color:var(--muted);}
+.rb-count strong{color:var(--text);}
+.rb-view{display:flex;gap:5px;}
+.rv-btn{
+  width:30px;height:30px;border-radius:8px;border:1px solid var(--border);
+  background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .17s;font-size:13px;
+}
+.rv-btn.on{background:rgba(124,58,237,.14);border-color:rgba(124,58,237,.3);}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a class="logo" href="#"><div class="logo-mark">🏠</div>Aqario</a>
+  <div class="nav-links">
+    <a class="nl" href="#">بيع</a>
+    <a class="nl" href="#">كراء</a>
+    <a class="nl" href="#">خريطة</a>
+    <a class="nl active" href="#">الوكالات</a>
+    <a class="nl" href="#">السعر العادل</a>
+  </div>
+  <div class="nav-right">
+    <div class="n-ico">🔔<div class="n-dot"></div></div>
+    <div class="n-ico">👤</div>
+    <button class="cta-btn">＋ نشر إعلان</button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-badge">🏢 دليل الوكالات</div>
+  <h1>ابحث عن <em>وكالة عقارية</em><br>موثوقة في المغرب</h1>
+  <p>أكثر من 340 وكالة عقارية معتمدة ومرخصة — مرتبة حسب التقييم والتوثيق والنشاط.</p>
+  <div class="hero-stats">
+    <div class="hs"><div class="hs-num" id="c0">0</div><div class="hs-lbl">وكالة مسجلة</div></div>
+    <div class="hs"><div class="hs-num" id="c1">0</div><div class="hs-lbl">وكالة موثقة</div></div>
+    <div class="hs"><div class="hs-num" id="c2">0</div><div class="hs-lbl">إعلان نشط</div></div>
+    <div class="hs"><div class="hs-num" id="c3">0</div><div class="hs-lbl">مدينة مغطاة</div></div>
+  </div>
+</section>
+
+<!-- ══ MAP ROW ══ -->
+<div class="map-row">
+  <div class="map-section">
+    <div class="ms-head">
+      <h3>🗺 الوكالات على الخريطة</h3>
+      <div class="ms-tabs">
+        <span class="mst on">الكل</span>
+        <span class="mst">الدار البيضاء</span>
+        <span class="mst">الرباط</span>
+        <span class="mst">مراكش</span>
+      </div>
+    </div>
+    <div class="map-viz">
+      <div class="map-grid-bg"></div>
+      <div class="map-roads">
+        <div class="mr-h" style="top:35%"></div>
+        <div class="mr-h" style="top:62%"></div>
+        <div class="mr-h" style="top:80%"></div>
+        <div class="mr-v" style="left:20%"></div>
+        <div class="mr-v" style="left:40%"></div>
+        <div class="mr-v" style="left:62%"></div>
+        <div class="mr-v" style="left:80%"></div>
+      </div>
+
+      <!-- Agency pins -->
+      <div class="a-pin" style="top:20%;right:30%" onclick="selectAgency(0)">
+        <div class="a-pin-circle" style="background:linear-gradient(135deg,#7C3AED,#4F46E5)">🏢</div>
+        <div class="a-pin-label" style="color:#C4B5FD">الدار البيضاء · 48</div>
+      </div>
+      <div class="a-pin" style="top:32%;right:52%" onclick="selectAgency(1)">
+        <div class="a-pin-circle" style="background:linear-gradient(135deg,#06B6D4,#3B82F6)">🏛</div>
+        <div class="a-pin-label" style="color:#67E8F9">الرباط · 31</div>
+      </div>
+      <div class="a-pin" style="top:55%;right:68%" onclick="selectAgency(2)">
+        <div class="a-pin-circle" style="background:linear-gradient(135deg,#F59E0B,#F97316)">🌴</div>
+        <div class="a-pin-label" style="color:#FCD34D">مراكش · 27</div>
+      </div>
+      <div class="a-pin" style="top:18%;right:10%" onclick="selectAgency(3)">
+        <div class="a-pin-circle" style="background:linear-gradient(135deg,#10B981,#06B6D4)">⚓</div>
+        <div class="a-pin-label" style="color:#6EE7B7">طنجة · 19</div>
+      </div>
+      <div class="a-pin" style="top:68%;right:45%" onclick="selectAgency(2)">
+        <div class="a-pin-circle" style="background:linear-gradient(135deg,#EF4444,#F97316)">🌊</div>
+        <div class="a-pin-label" style="color:#FCA5A5">أكادير · 15</div>
+      </div>
+      <div class="a-pin" style="top:28%;right:75%" onclick="selectAgency(4)">
+        <div class="a-pin-circle" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9)">🏰</div>
+        <div class="a-pin-label" style="color:#DDD6FE">فاس · 22</div>
+      </div>
+
+      <!-- Legend -->
+      <div class="map-legend">
+        <div class="ml-title">المدن</div>
+        <div class="ml-item"><div class="ml-dot" style="background:#7C3AED"></div>الدار البيضاء</div>
+        <div class="ml-item"><div class="ml-dot" style="background:#06B6D4"></div>الرباط</div>
+        <div class="ml-item"><div class="ml-dot" style="background:#F59E0B"></div>مراكش</div>
+        <div class="ml-item"><div class="ml-dot" style="background:#10B981"></div>طنجة</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FILTER BAR ══ -->
+<div class="filter-bar">
+  <div class="search-box">
+    <span>🔍</span>
+    <input placeholder="ابحث عن وكالة بالاسم أو المدينة..." oninput="filterAgencies(this.value)">
+  </div>
+  <span class="fchip on" onclick="toggleChip(this,'all')">الكل</span>
+  <span class="fchip" onclick="toggleChip(this,'verified')">✅ موثقة</span>
+  <span class="fchip" onclick="toggleChip(this,'top')">⭐ الأعلى تقييماً</span>
+  <span class="fchip" onclick="toggleChip(this,'casa')">🏙 الدار البيضاء</span>
+  <span class="fchip" onclick="toggleChip(this,'rabat')">🏛 الرباط</span>
+  <span class="fchip" onclick="toggleChip(this,'marrakech')">🌴 مراكش</span>
+  <select class="sort-sel" onchange="sortAgencies(this.value)">
+    <option value="rating">الأعلى تقييماً</option>
+    <option value="listings">الأكثر إعلانات</option>
+    <option value="newest">الأحدث</option>
+    <option value="name">الاسم أ-ي</option>
+  </select>
+</div>
+
+<!-- ══ BODY ══ -->
+<div class="page-body">
+
+  <!-- List -->
+  <div>
+    <div class="results-bar">
+      <div class="rb-count">عرض <strong id="countDisp">5</strong> وكالة من أصل <strong>340</strong></div>
+      <div class="rb-view">
+        <div class="rv-btn on">☰</div>
+        <div class="rv-btn">⊞</div>
+      </div>
+    </div>
+    <div class="agencies-list" id="agencyList"></div>
+  </div>
+
+  <!-- Profile panel -->
+  <div class="profile-panel" id="profilePanel">
+    <!-- rendered by JS -->
+  </div>
+
+</div>
+
+<script>
+// ── Agency Data ───────────────────────────────────────────────
+const AGENCIES = [
+  {
+    id:0, featured:true,
+    name:'Prestige Immobilier',
+    nameAr:'بريستيج للعقارات',
+    city:'الدار البيضاء', cityEn:'casa',
+    logo:'🏢', logoBg:'linear-gradient(135deg,#1a0d3d,#2d1b69)',
+    rating:4.9, reviews:218, founded:2014,
+    license:'RC-2014-00847',
+    desc:'وكالة رائدة في الدار البيضاء متخصصة في العقارات الفاخرة والاستثمارية. فريق من 18 خبير معتمد.',
+    listings:142, sold:89, agents:18, cities:4,
+    badges:['ver','lic','top'],
+    specs:['شقق فاخرة','فيلات','استثماري','مكاتب'],
+    phone:'+212 522 001 234',
+    properties:[
+      {icon:'🏢',tc:'pmt-a',title:'شقة بنك مغرب – الطابق 12',price:'4,200,000 MAD'},
+      {icon:'🏡',tc:'pmt-v',title:'فيلا أنفا روض',price:'12,800,000 MAD'},
+      {icon:'🏢',tc:'pmt-a',title:'بنتهاوس – مارينا',price:'7,500,000 MAD'},
+    ]
+  },
+  {
+    id:1, featured:true,
+    name:'Rabat Realty',
+    nameAr:'رباط ريالتي',
+    city:'الرباط', cityEn:'rabat',
+    logo:'🏛', logoBg:'linear-gradient(135deg,#0a1f35,#1e3a5f)',
+    rating:4.8, reviews:156, founded:2016,
+    license:'RC-2016-01204',
+    desc:'متخصصون في عقارات الرباط والضواحي الراقية. نقدم خدمات بيع وكراء وإدارة عقارية متكاملة.',
+    listings:98, sold:64, agents:12, cities:3,
+    badges:['ver','lic'],
+    specs:['شقق','فيلات','أراضي','تجاري'],
+    phone:'+212 537 445 678',
+    properties:[
+      {icon:'🏡',tc:'pmt-v',title:'فيلا أكدال – حي الرياض',price:'3,800,000 MAD'},
+      {icon:'🏢',tc:'pmt-a',title:'شقة بأكدال 3 غرف',price:'1,950,000 MAD'},
+    ]
+  },
+  {
+    id:2, featured:false,
+    name:'Marrakech Medina',
+    nameAr:'مراكش مدينة',
+    city:'مراكش', cityEn:'marrakech',
+    logo:'🌴', logoBg:'linear-gradient(135deg,#2a1200,#4a2000)',
+    rating:4.7, reviews:93, founded:2018,
+    license:'RC-2018-00532',
+    desc:'خبراء عقارات مراكش والمناطق السياحية. رياضات، فيلات وشقق فاخرة في المدينة والمدينة العتيقة.',
+    listings:76, sold:41, agents:9, cities:2,
+    badges:['ver','new'],
+    specs:['رياض','فيلات','سياحي','شقق'],
+    phone:'+212 524 331 900',
+    properties:[
+      {icon:'🏡',tc:'pmt-v',title:'رياض مفروش – المدينة العتيقة',price:'5,500,000 MAD'},
+      {icon:'🌿',tc:'pmt-l',title:'أرض للبناء – النخيل',price:'1,200,000 MAD'},
+    ]
+  },
+  {
+    id:3, featured:false,
+    name:'Tanger Bay Properties',
+    nameAr:'بروبرتيز طنجة باي',
+    city:'طنجة', cityEn:'tanger',
+    logo:'⚓', logoBg:'linear-gradient(135deg,#002a1a,#004a2a)',
+    rating:4.6, reviews:74, founded:2019,
+    license:'RC-2019-00981',
+    desc:'متخصصون في الساحل الشمالي المغربي. شقق وفيلات تطل على البحر المتوسط والمحيط.',
+    listings:54, sold:28, agents:7, cities:2,
+    badges:['ver'],
+    specs:['واجهة بحرية','فيلات','شقق','إيجار سياحي'],
+    phone:'+212 539 112 456',
+    properties:[
+      {icon:'🏢',tc:'pmt-a',title:'شقة تطل على البوغاز',price:'2,100,000 MAD'},
+    ]
+  },
+  {
+    id:4, featured:false,
+    name:'Fès Patrimoine',
+    nameAr:'فاس باتريموان',
+    city:'فاس', cityEn:'fes',
+    logo:'🏰', logoBg:'linear-gradient(135deg,#1a0a2e,#300f55)',
+    rating:4.5, reviews:61, founded:2017,
+    license:'RC-2017-00764',
+    desc:'عقارات فاس القديمة والجديدة. ريادات، دور تقليدية وشقق حديثة. خبرة 7 سنوات في السوق الفاسي.',
+    listings:48, sold:22, agents:6, cities:1,
+    badges:['lic'],
+    specs:['ريادات','دور تقليدية','شقق','تجاري'],
+    phone:'+212 535 629 000',
+    properties:[
+      {icon:'🏡',tc:'pmt-v',title:'دار تقليدية – البالي',price:'950,000 MAD'},
+      {icon:'🏢',tc:'pmt-a',title:'شقة مولاي سليمان',price:'720,000 MAD'},
+    ]
+  }
+]
+
+const BADGE_DEF = {
+  ver: {cls:'ab-ver', text:'✅ موثقة'},
+  lic: {cls:'ab-lic', text:'📋 مرخصة'},
+  new: {cls:'ab-new', text:'🆕 جديدة'},
+  top: {cls:'ab-top', text:'🏆 الأفضل'},
+}
+
+// ── Render agency card ────────────────────────────────────────
+function renderCard(a) {
+  const badges = a.badges.map(b=>`<span class="ab ${BADGE_DEF[b].cls}">${BADGE_DEF[b].text}</span>`).join('')
+  return `
+  <div class="agency-card${a.featured?' featured':''}" onclick="selectAgency(${a.id})">
+    <div class="ac-inner">
+      <div class="ac-logo-panel">
+        <div class="ac-logo" style="background:${a.logoBg}">${a.logo}</div>
+        <div class="ac-rating">⭐ ${a.rating}</div>
+        <div class="ac-reviews">${a.reviews} تقييم</div>
+      </div>
+      <div class="ac-body">
+        <div class="ac-top">
+          <div>
+            <div class="ac-name">${a.nameAr}</div>
+            <div class="ac-city">📍 ${a.city}</div>
+          </div>
+        </div>
+        <div class="ac-badges">${badges}</div>
+        <div class="ac-desc">${a.desc}</div>
+        <div class="ac-stats">
+          <div class="as-item"><div class="as-num">${a.listings}</div><div class="as-lbl">إعلان نشط</div></div>
+          <div class="as-item"><div class="as-num">${a.sold}</div><div class="as-lbl">صفقة منجزة</div></div>
+          <div class="as-item"><div class="as-num">${a.agents}</div><div class="as-lbl">وكيل</div></div>
+          <div class="as-item"><div class="as-num">${a.cities}</div><div class="as-lbl">مدينة</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ac-footer">
+      <div class="ac-specs">
+        <span class="ac-spec">📋 <strong>${a.license}</strong></span>
+        <span class="ac-spec">🗓 منذ <strong>${a.founded}</strong></span>
+      </div>
+      <div class="ac-actions">
+        <button class="ac-btn ac-btn-ghost" onclick="event.stopPropagation()">💬 رسالة</button>
+        <button class="ac-btn ac-btn-primary" onclick="event.stopPropagation()">📞 اتصال</button>
+      </div>
+    </div>
+  </div>`
+}
+
+// ── Render profile panel ──────────────────────────────────────
+function renderProfile(a) {
+  const badges = a.badges.map(b=>`<span class="ab ${BADGE_DEF[b].cls}">${BADGE_DEF[b].text}</span>`).join('')
+  const specs  = a.specs.map(s=>`<span class="pp-spec-chip">${s}</span>`).join('')
+  const props  = a.properties.map(p=>`
+    <div class="pml">
+      <div class="pml-thumb ${p.tc}">${p.icon}</div>
+      <div class="pml-info">
+        <div class="pml-title">${p.title}</div>
+        <div class="pml-price">${p.price}</div>
+      </div>
+      <span class="pml-arrow">←</span>
+    </div>`).join('')
+
+  const stars = '⭐'.repeat(Math.round(a.rating))
+
+  return `
+  <div class="pp-hero">
+    <div class="pp-hero-grid"></div>
+    <div class="pp-logo" style="background:${a.logoBg}">${a.logo}</div>
+  </div>
+  <div class="pp-body">
+    <div class="pp-name">${a.nameAr}</div>
+    <div class="pp-loc">📍 ${a.city} &nbsp;·&nbsp; 🗓 منذ ${a.founded}</div>
+    <div class="pp-badges">${badges}</div>
+
+    <div class="pp-rating-row">
+      <div class="pp-star-big">⭐</div>
+      <div>
+        <div class="pp-r-num">${a.rating}</div>
+        <div class="pp-stars">${'⭐'.repeat(5)}</div>
+      </div>
+      <div style="margin-right:auto;text-align:center">
+        <div style="font-family:'Tajawal',sans-serif;font-size:16px;font-weight:800;color:var(--text)">${a.reviews}</div>
+        <div class="pp-r-sub">تقييم</div>
+      </div>
+    </div>
+
+    <div class="pp-stats">
+      <div class="pp-stat"><div class="pp-stat-num">${a.listings}</div><div class="pp-stat-lbl">إعلان نشط</div></div>
+      <div class="pp-stat"><div class="pp-stat-num">${a.sold}</div><div class="pp-stat-lbl">صفقة منجزة</div></div>
+      <div class="pp-stat"><div class="pp-stat-num">${a.agents}</div><div class="pp-stat-lbl">وكيل معتمد</div></div>
+      <div class="pp-stat"><div class="pp-stat-num">${a.cities}</div><div class="pp-stat-lbl">مدينة</div></div>
+    </div>
+
+    <div class="pp-sec-title">التخصصات</div>
+    <div class="pp-specs">${specs}</div>
+
+    <div class="pp-sec-title">أبرز الإعلانات</div>
+    <div class="pp-mini-listings">${props}</div>
+
+    <div class="pp-sec-title">التواصل</div>
+    <div class="pp-contact">
+      <button class="pp-call">📞 &nbsp;اتصل الآن — ${a.phone}</button>
+      <div class="pp-row2">
+        <button class="pp-wa">💬 واتساب</button>
+        <button class="pp-profile-btn">👁 الملف الكامل</button>
+      </div>
+    </div>
+  </div>`
+}
+
+// ── Select agency ─────────────────────────────────────────────
+let selected = 0
+function selectAgency(id) {
+  selected = id
+  document.querySelectorAll('.agency-card').forEach((c,i) => {
+    c.style.borderColor = i===id ? 'rgba(124,58,237,.5)' : ''
+    c.style.boxShadow   = i===id ? '0 0 0 2px rgba(124,58,237,.2)' : ''
+  })
+  const a = AGENCIES[id]
+  document.getElementById('profilePanel').innerHTML = renderProfile(a)
+}
+
+// ── Render list ───────────────────────────────────────────────
+function renderList(data) {
+  document.getElementById('agencyList').innerHTML = data.map(a => renderCard(a)).join('')
+  document.getElementById('countDisp').textContent = data.length
+  // re-highlight selected
+  document.querySelectorAll('.agency-card')[selected]?.click?.()
+}
+
+// ── Filter / Search ───────────────────────────────────────────
+let activeFilter = 'all'
+function filterAgencies(q) {
+  const filtered = AGENCIES.filter(a =>
+    a.nameAr.includes(q) || a.name.toLowerCase().includes(q.toLowerCase()) || a.city.includes(q)
+  )
+  renderList(filtered)
+  selectAgency(0)
+}
+
+function toggleChip(el, key) {
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'))
+  el.classList.add('on')
+  activeFilter = key
+  let data = [...AGENCIES]
+  if (key==='verified') data = data.filter(a=>a.badges.includes('ver'))
+  if (key==='top')      data = data.filter(a=>a.rating>=4.8)
+  if (key==='casa')     data = data.filter(a=>a.cityEn==='casa')
+  if (key==='rabat')    data = data.filter(a=>a.cityEn==='rabat')
+  if (key==='marrakech')data = data.filter(a=>a.cityEn==='marrakech')
+  renderList(data)
+  if (data.length) selectAgency(data[0].id)
+}
+
+function sortAgencies(val) {
+  let data = [...AGENCIES]
+  if (val==='rating')   data.sort((a,b)=>b.rating-a.rating)
+  if (val==='listings') data.sort((a,b)=>b.listings-a.listings)
+  if (val==='newest')   data.sort((a,b)=>b.founded-a.founded)
+  if (val==='name')     data.sort((a,b)=>a.nameAr.localeCompare(b.nameAr,'ar'))
+  renderList(data)
+  if (data.length) selectAgency(data[0].id)
+}
+
+// ── Map tab switching ─────────────────────────────────────────
+document.querySelectorAll('.mst').forEach(t => {
+  t.addEventListener('click', function() {
+    document.querySelectorAll('.mst').forEach(x=>x.classList.remove('on'))
+    this.classList.add('on')
+  })
+})
+
+// ── Counter animation ─────────────────────────────────────────
+function count(id, to, dur=1100) {
+  const el=document.getElementById(id), t0=Date.now()
+  const tick=()=>{
+    const p=Math.min((Date.now()-t0)/dur,1)
+    el.textContent = Math.round((1-Math.pow(1-p,3))*to).toLocaleString('ar-MA')
+    if(p<1) requestAnimationFrame(tick)
+  }; tick()
+}
+
+// ── Init ─────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  renderList(AGENCIES)
+  selectAgency(0)
+  setTimeout(()=>count('c0',340), 200)
+  setTimeout(()=>count('c1',218), 350)
+  setTimeout(()=>count('c2',4800),500)
+  setTimeout(()=>count('c3',47),  650)
+})
+</script>
+</body>
+</html>

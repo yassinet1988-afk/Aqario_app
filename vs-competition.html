@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aqario vs المنافسين — لماذا Aqario؟</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@700;800;900&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06040E;
+  --card:rgba(255,255,255,.045);
+  --border:rgba(255,255,255,.08);
+  --primary:#7C3AED;--accent:#4F46E5;--teal:#06B6D4;
+  --gold:#F59E0B;--green:#10B981;--red:#EF4444;
+  --text:#F0EFF6;--muted:#8B8BAE;--muted2:#3E3E5E;
+  --aqario:#7C3AED;
+  --mubawab:#E8321A;
+  --avito:#91C11E;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 65% 55% at 85% 5%,rgba(124,58,237,.22) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 35% at 5% 80%,rgba(6,182,212,.1) 0%,transparent 55%);
+}
+
+/* ══ NAV ══════════════════════════════════════════════ */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 44px;height:60px;
+  background:rgba(6,4,14,.92);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  display:flex;align-items:center;gap:8px;text-decoration:none;
+  font-family:'Tajawal',sans-serif;font-size:20px;font-weight:900;
+  background:linear-gradient(135deg,#A78BFA,#67E8F9);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.logo-mark{
+  width:28px;height:28px;border-radius:7px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;-webkit-text-fill-color:initial;
+}
+.nav-badge{
+  padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;
+  background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25);color:#FCA5A5;
+}
+.nav-cta{
+  padding:7px 16px;border-radius:8px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;-webkit-text-fill-color:#fff;
+  font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;
+}
+
+/* ══ HERO ═══════════════════════════════════════════════ */
+.hero{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;
+  padding:60px 44px 44px;text-align:center;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;
+  background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.22);
+  color:#FCA5A5;margin-bottom:20px;
+}
+.hero h1{
+  font-family:'Syne',sans-serif;font-size:52px;font-weight:900;
+  line-height:1.1;margin-bottom:16px;letter-spacing:-1px;
+}
+.hero h1 .vs{
+  display:inline-block;
+  background:linear-gradient(135deg,#A78BFA,#67E8F9);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero h1 .losers{
+  color:rgba(255,255,255,.25);text-decoration:line-through;
+  text-decoration-color:rgba(239,68,68,.5);
+}
+.hero-sub{
+  font-size:16px;color:var(--muted);max-width:560px;
+  margin:0 auto 32px;line-height:1.7;
+}
+
+/* Competitor logos row */
+.vs-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:20px;margin-bottom:48px;
+}
+.vs-logo{
+  display:flex;align-items:center;gap:8px;padding:10px 20px;
+  border-radius:14px;border:1px solid var(--border);
+  background:rgba(255,255,255,.04);font-size:14px;font-weight:700;
+}
+.vs-logo.aqario{
+  border-color:rgba(124,58,237,.4);
+  background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(79,70,229,.08));
+  color:#C4B5FD;
+}
+.vs-logo.mubawab{border-color:rgba(232,50,26,.25);color:rgba(232,50,26,.8);}
+.vs-logo.avito  {border-color:rgba(145,193,30,.25);color:rgba(145,193,30,.8);}
+.vs-sep{font-size:20px;color:var(--muted2);font-weight:900;}
+.winner-crown{font-size:20px;margin-left:2px;}
+
+/* ══ SCORE BANNER ══════════════════════════════════════ */
+.score-banner{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;
+  padding:0 44px 44px;
+}
+.score-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;
+}
+.score-card{
+  border-radius:20px;padding:24px;text-align:center;
+  border:1px solid;transition:all .25s;cursor:default;
+}
+.sc-aqario{
+  background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(79,70,229,.1));
+  border-color:rgba(124,58,237,.35);
+  box-shadow:0 0 40px rgba(124,58,237,.15);
+}
+.sc-mubawab{
+  background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.07);
+}
+.sc-avito{
+  background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.07);
+}
+.sc-brand{font-size:13px;font-weight:700;margin-bottom:10px;color:var(--muted);}
+.sc-aqario .sc-brand{color:#C4B5FD;}
+.sc-num{
+  font-family:'Syne',sans-serif;font-size:56px;font-weight:900;
+  line-height:1;margin-bottom:6px;
+}
+.sc-aqario .sc-num{
+  background:linear-gradient(135deg,#A78BFA,#67E8F9);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.sc-mubawab .sc-num,.sc-avito .sc-num{color:rgba(255,255,255,.25);}
+.sc-max{font-size:18px;color:var(--muted);}
+.sc-label{font-size:11px;color:var(--muted);margin-bottom:12px;}
+.sc-aqario .sc-label{color:rgba(196,181,253,.7);}
+.sc-bar-wrap{height:6px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;}
+.sc-bar-fill{height:100%;border-radius:10px;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.fill-aqario {background:linear-gradient(90deg,#7C3AED,#06B6D4);}
+.fill-mubawab{background:rgba(232,50,26,.5);}
+.fill-avito  {background:rgba(145,193,30,.4);}
+.sc-crown{
+  display:inline-flex;align-items:center;gap:5px;margin-top:12px;
+  padding:4px 12px;border-radius:20px;font-size:10px;font-weight:700;
+  background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);color:var(--gold);
+}
+
+/* ══ MAIN TABLE ══════════════════════════════════════════ */
+.table-section{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;
+  padding:0 44px 44px;
+}
+.ts-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;
+}
+.ts-head h2{
+  font-family:'Tajawal',sans-serif;font-size:26px;font-weight:900;
+}
+.ts-head p{font-size:13px;color:var(--muted);}
+
+/* Table wrapper */
+.comp-table{
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;
+}
+
+/* Header row */
+.ct-header{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  border-bottom:1px solid var(--border);
+}
+.ct-header-cell{
+  padding:16px 20px;font-size:12px;font-weight:700;text-align:center;
+}
+.ct-header-cell:first-child{text-align:right;color:var(--muted);}
+.ch-aqario{
+  background:linear-gradient(180deg,rgba(124,58,237,.15),transparent);
+  color:#C4B5FD;border-right:1px solid var(--border);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+}
+.ch-aqario .ch-winner{
+  font-size:9px;padding:2px 8px;border-radius:20px;
+  background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.2);color:var(--gold);
+}
+.ch-mubawab{color:rgba(232,50,26,.7);}
+.ch-avito  {color:rgba(145,193,30,.7);}
+
+/* Category separator */
+.ct-category{
+  padding:10px 20px;font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;color:var(--muted2);
+  background:rgba(255,255,255,.02);border-bottom:1px solid var(--border);
+  border-top:1px solid var(--border);
+}
+.ct-category:first-of-type{border-top:none;}
+
+/* Table row */
+.ct-row{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  transition:background .15s;
+}
+.ct-row:last-child{border-bottom:none;}
+.ct-row:hover{background:rgba(255,255,255,.025);}
+.ct-cell{
+  padding:14px 20px;display:flex;align-items:center;
+  justify-content:center;font-size:13px;
+}
+.ct-cell:first-child{
+  justify-content:flex-start;gap:9px;
+}
+.ct-cell.aqario-col{
+  background:rgba(124,58,237,.05);
+  border-right:1px solid rgba(124,58,237,.12);
+  border-left:1px solid rgba(124,58,237,.12);
+}
+.feature-ico{font-size:18px;flex-shrink:0;}
+.feature-name{font-size:13px;font-weight:700;}
+.feature-sub {font-size:10px;color:var(--muted);margin-top:1px;}
+
+/* Cell values */
+.cv-yes{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(16,185,129,.15);border:1.5px solid rgba(16,185,129,.35);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;
+}
+.cv-no{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(239,68,68,.1);border:1.5px solid rgba(239,68,68,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;
+}
+.cv-partial{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(245,158,11,.1);border:1.5px solid rgba(245,158,11,.2);
+  display:flex;align-items:center;justify-content:center;font-size:11px;
+}
+.cv-text{
+  font-size:11px;font-weight:700;
+  padding:3px 8px;border-radius:6px;
+}
+.cvt-green{background:rgba(16,185,129,.1);color:var(--green);}
+.cvt-red  {background:rgba(239,68,68,.08);color:var(--red);opacity:.7;}
+.cvt-gold {background:rgba(245,158,11,.1); color:var(--gold);}
+.cvt-muted{color:var(--muted2);font-size:10px;}
+
+/* ══ WHY SECTION ══════════════════════════════════════════ */
+.why-section{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;
+  padding:0 44px 56px;
+}
+.why-section h2{
+  font-family:'Tajawal',sans-serif;font-size:28px;font-weight:900;
+  margin-bottom:6px;
+}
+.why-section p{font-size:14px;color:var(--muted);margin-bottom:28px;}
+
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.why-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:18px;padding:22px;
+  transition:all .22s;
+}
+.why-card:hover{
+  border-color:rgba(124,58,237,.3);
+  transform:translateY(-3px);
+  box-shadow:0 10px 32px rgba(0,0,0,.3);
+}
+.wc-icon{
+  font-size:32px;margin-bottom:12px;
+  display:block;
+}
+.wc-title{
+  font-family:'Tajawal',sans-serif;font-size:17px;font-weight:800;
+  margin-bottom:6px;
+}
+.wc-desc{font-size:12px;color:var(--muted);line-height:1.7;}
+.wc-tag{
+  display:inline-flex;margin-top:12px;
+  padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;
+  background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);color:#C4B5FD;
+}
+
+/* ══ TESTIMONIALS / PROOF ══════════════════════════════════ */
+.proof-section{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;
+  padding:0 44px 56px;
+}
+.proof-section h2{
+  font-family:'Tajawal',sans-serif;font-size:26px;font-weight:900;
+  margin-bottom:24px;
+}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.proof-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:18px;padding:20px;
+}
+.pc-stars{color:var(--gold);font-size:13px;margin-bottom:10px;letter-spacing:1px;}
+.pc-text{font-size:13px;color:rgba(255,255,255,.8);line-height:1.65;margin-bottom:14px;}
+.pc-user{display:flex;align-items:center;gap:9px;}
+.pc-av{
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;-webkit-text-fill-color:#fff;flex-shrink:0;
+}
+.pc-name{font-size:12px;font-weight:700;}
+.pc-meta{font-size:10px;color:var(--muted);}
+.pc-platform{
+  font-size:9px;margin-top:3px;padding:1px 7px;border-radius:4px;
+  display:inline-block;font-weight:700;
+}
+.pp-mubawab{background:rgba(232,50,26,.1);color:rgba(232,50,26,.8);}
+.pp-avito  {background:rgba(145,193,30,.1);color:rgba(145,193,30,.8);}
+
+/* ══ FINAL CTA ══════════════════════════════════════════ */
+.cta-section{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;
+  padding:0 44px 80px;
+}
+.cta-box{
+  background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(79,70,229,.12),rgba(6,182,212,.08));
+  border:1px solid rgba(124,58,237,.3);border-radius:24px;
+  padding:48px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-box::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(124,58,237,.12);pointer-events:none;
+}
+.cta-box::after{
+  content:'';position:absolute;bottom:-40px;left:-40px;
+  width:160px;height:160px;border-radius:50%;
+  background:rgba(6,182,212,.07);pointer-events:none;
+}
+.cta-box h2{
+  font-family:'Syne',sans-serif;font-size:36px;font-weight:900;
+  line-height:1.15;margin-bottom:12px;position:relative;z-index:1;
+}
+.cta-box p{font-size:15px;color:var(--muted);margin-bottom:28px;position:relative;z-index:1;}
+.cta-btns{display:flex;justify-content:center;gap:12px;position:relative;z-index:1;}
+.cta-primary{
+  padding:14px 32px;border-radius:14px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;-webkit-text-fill-color:#fff;
+  font-family:'Cairo',sans-serif;font-size:15px;font-weight:800;
+  box-shadow:0 8px 28px rgba(124,58,237,.45);transition:all .22s;
+}
+.cta-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(124,58,237,.6);}
+.cta-ghost{
+  padding:14px 28px;border-radius:14px;cursor:pointer;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  color:var(--text);-webkit-text-fill-color:var(--text);
+  font-family:'Cairo',sans-serif;font-size:15px;font-weight:700;
+  transition:all .2s;
+}
+.cta-ghost:hover{background:rgba(255,255,255,.1);}
+
+/* ══ ANIMATIONS ══════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+.hero{animation:fadeUp .5s ease both;}
+.score-banner{animation:fadeUp .5s ease .1s both;}
+.table-section{animation:fadeUp .5s ease .18s both;}
+.why-card:nth-child(1){animation:fadeUp .4s ease .22s both;}
+.why-card:nth-child(2){animation:fadeUp .4s ease .30s both;}
+.why-card:nth-child(3){animation:fadeUp .4s ease .38s both;}
+.why-card:nth-child(4){animation:fadeUp .4s ease .26s both;}
+.why-card:nth-child(5){animation:fadeUp .4s ease .34s both;}
+.why-card:nth-child(6){animation:fadeUp .4s ease .42s both;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#"><div class="logo-mark">🏠</div>Aqario</a>
+  <span class="nav-badge">⚔️ مقارنة المنافسين</span>
+  <button class="nav-cta">ابدأ مجاناً ←</button>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-eyebrow">⚖️ مقارنة موضوعية وشفافة</div>
+  <h1>
+    <span class="vs">Aqario</span> يكسر<br>
+    <span class="losers">Mubawab &amp; Avito</span>
+  </h1>
+  <p class="hero-sub">
+    المنصة العقارية المغربية الأولى التي تضع الثقة والجودة فوق الكثرة.<br>
+    مقارنة شاملة في 25 معيار — بالأرقام والحقائق.
+  </p>
+
+  <div class="vs-row">
+    <div class="vs-logo aqario">🏠 Aqario <span class="winner-crown">👑</span></div>
+    <div class="vs-sep">VS</div>
+    <div class="vs-logo mubawab">🟠 Mubawab</div>
+    <div class="vs-sep">VS</div>
+    <div class="vs-logo avito">🟢 Avito</div>
+  </div>
+</section>
+
+<!-- ══ SCORES ══ -->
+<div class="score-banner">
+  <div class="score-row">
+
+    <div class="score-card sc-aqario">
+      <div class="sc-brand">🏠 Aqario</div>
+      <div class="sc-num"><span id="sc-aqario">0</span><span class="sc-max">/100</span></div>
+      <div class="sc-label">درجة الجودة الإجمالية</div>
+      <div class="sc-bar-wrap"><div class="sc-bar-fill fill-aqario" style="width:0" id="bar-aqario"></div></div>
+      <div class="sc-crown">👑 الأفضل في كل المعايير</div>
+    </div>
+
+    <div class="score-card sc-mubawab">
+      <div class="sc-brand">🟠 Mubawab</div>
+      <div class="sc-num"><span id="sc-mubawab">0</span><span class="sc-max">/100</span></div>
+      <div class="sc-label">درجة الجودة الإجمالية</div>
+      <div class="sc-bar-wrap"><div class="sc-bar-fill fill-mubawab" style="width:0" id="bar-mubawab"></div></div>
+    </div>
+
+    <div class="score-card sc-avito">
+      <div class="sc-brand">🟢 Avito</div>
+      <div class="sc-num"><span id="sc-avito">0</span><span class="sc-max">/100</span></div>
+      <div class="sc-label">درجة الجودة الإجمالية</div>
+      <div class="sc-bar-wrap"><div class="sc-bar-fill fill-avito" style="width:0" id="bar-avito"></div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ COMPARISON TABLE ══ -->
+<div class="table-section">
+  <div class="ts-head">
+    <div>
+      <h2>📊 مقارنة تفصيلية — 25 معيار</h2>
+      <p>كل معيار مبني على بيانات حقيقية من المنصات الثلاث</p>
+    </div>
+  </div>
+
+  <div class="comp-table">
+
+    <!-- HEADER -->
+    <div class="ct-header">
+      <div class="ct-header-cell">المعيار</div>
+      <div class="ct-header-cell ch-aqario">
+        🏠 Aqario
+        <span class="ch-winner">👑 الفائز</span>
+      </div>
+      <div class="ct-header-cell ch-mubawab">🟠 Mubawab</div>
+      <div class="ct-header-cell ch-avito">🟢 Avito</div>
+    </div>
+
+    <!-- ── TRUST & VERIFICATION ── -->
+    <div class="ct-category">🔐 الثقة والتوثيق</div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">📱</span><div><div class="feature-name">توثيق رقم الهاتف</div><div class="feature-sub">SMS OTP عند التسجيل</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-yes">✅</div></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">🪪</span><div><div class="feature-name">توثيق بطاقة الهوية (CIN)</div><div class="feature-sub">التحقق من هوية المالك</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-no">❌</div></div>
+      <div class="ct-cell"><div class="cv-no">❌</div></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">📄</span><div><div class="feature-name">توثيق وثيقة الملكية</div><div class="feature-sub">رسوم ملكية + عقد البيع</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-no">❌</div></div>
+      <div class="ct-cell"><div class="cv-no">❌</div></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">🚫</span><div><div class="feature-name">منع الإعلانات المكررة</div><div class="feature-sub">خوارزمية pHash + NLP</div></div></div>
+      <div class="ct-cell aqario-col"><span class="cv-text cvt-green">pHash AI ✓</span></div>
+      <div class="ct-cell"><span class="cv-text cvt-red">يدوي فقط</span></div>
+      <div class="ct-cell"><div class="cv-no">❌</div></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">🤖</span><div><div class="feature-name">كشف الإعلانات الوهمية</div><div class="feature-sub">AI لكشف التلاعب بالبيانات</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-partial">⚠️</div></div>
+      <div class="ct-cell"><div class="cv-no">❌</div></div>
+    </div>
+
+    <!-- ── PRICING & VALUE ── -->
+    <div class="ct-category">💰 التسعير والقيمة</div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">💡</span><div><div class="feature-name">تقدير السعر العادل (AI)</div><div class="feature-sub">بناءً على بيانات السوق</div></div></div>
+      <div class="ct-cell aqario-col"><span class="cv-text cvt-green">مجاني ✓</span></div>
+      <div class="ct-cell"><span class="cv-text cvt-gold">مدفوع فقط</span></div>
+      <div class="ct-cell"><div class="cv-no">❌</div></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">💸</span><div><div class="feature-name">نشر إعلان مجاني</div><div class="feature-sub">بدون اشتراك أو رسوم</div></div></div>
+      <div class="ct-cell aqario-col"><span class="cv-text cvt-green">مجاني ✓</span></div>
+      <div class="ct-cell"><span class="cv-text cvt-gold">محدود</span></div>
+      <div class="ct-cell"><span class="cv-text cvt-green">مجاني</span></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">📊</span><div><div class="feature-name">إحصائيات الإعلان</div><div class="feature-sub">مشاهدات، تواصل، مفضلة</div></div></div>
+      <div class="ct-cell aqario-col"><span class="cv-text cvt-green">مجاني ✓</span></div>
+      <div class="ct-cell"><span class="cv-text cvt-gold">Premium فقط</span></div>
+      <div class="ct-cell"><span class="cv-text cvt-gold">Premium فقط</span></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">🚫</span><div><div class="feature-name">إعلانات ممولة في النتائج</div><div class="feature-sub">الإعلانات المدفوعة تدفن النتائج</div></div></div>
+      <div class="ct-cell aqario-col"><span class="cv-text cvt-green">لا يوجد ✓</span></div>
+      <div class="ct-cell"><span class="cv-text cvt-red">كثيرة</span></div>
+      <div class="ct-cell"><span class="cv-text cvt-red">كثيرة</span></div>
+    </div>
+
+    <!-- ── UX & TECHNOLOGY ── -->
+    <div class="ct-category">⚡ التجربة والتكنولوجيا</div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">🗺</span><div><div class="feature-name">خريطة تفاعلية أولاً</div><div class="feature-sub">بحث جغرافي بالكامل</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-partial">⚠️</div></div>
+      <div class="ct-cell"><div class="cv-no">❌</div></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">📱</span><div><div class="feature-name">تجربة موبايل محسّنة</div><div class="feature-sub">PWA + React Native</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-partial">⚠️</div></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">🌍</span><div><div class="feature-name">دعم العربية الكامل (RTL)</div><div class="feature-sub">واجهة عربية أصيلة</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-partial">⚠️</div></div>
+      <div class="ct-cell"><div class="cv-partial">⚠️</div></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">⚡</span><div><div class="feature-name">نشر إعلان في 60 ثانية</div><div class="feature-sub">3 خطوات فقط</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><span class="cv-text cvt-muted">5–15 دقيقة</span></div>
+      <div class="ct-cell"><span class="cv-text cvt-gold">~3 دقائق</span></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">💬</span><div><div class="feature-name">تواصل مباشر عبر واتساب</div><div class="feature-sub">رابط مباشر بدون وسيط</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-no">❌</div></div>
+      <div class="ct-cell"><div class="cv-partial">⚠️</div></div>
+    </div>
+
+    <!-- ── MARKET FOCUS ── -->
+    <div class="ct-category">🇲🇦 التركيز على السوق المغربي</div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">💰</span><div><div class="feature-name">عملة MAD درهم</div><div class="feature-sub">كل الأسعار بالدرهم المغربي</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-yes">✅</div></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">🏙</span><div><div class="feature-name">تغطية جميع المدن</div><div class="feature-sub">من طنجة إلى الداخلة</div></div></div>
+      <div class="ct-cell aqario-col"><span class="cv-text cvt-green">47 مدينة ✓</span></div>
+      <div class="ct-cell"><span class="cv-text cvt-gold">مدن كبرى</span></div>
+      <div class="ct-cell"><span class="cv-text cvt-gold">مدن كبرى</span></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">🏢</span><div><div class="feature-name">دليل الوكالات المعتمدة</div><div class="feature-sub">وكالات مرخصة ومصنفة</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-no">❌</div></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">🤝</span><div><div class="feature-name">تواصل مع المالك مباشرة</div><div class="feature-sub">بدون وسيط إلزامي</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-partial">⚠️</div></div>
+      <div class="ct-cell"><div class="cv-yes">✅</div></div>
+    </div>
+
+    <div class="ct-row">
+      <div class="ct-cell"><span class="feature-ico">📍</span><div><div class="feature-name">بيانات الأحياء المفصلة</div><div class="feature-sub">حدود الأحياء + خدمات قريبة</div></div></div>
+      <div class="ct-cell aqario-col"><div class="cv-yes">✅</div></div>
+      <div class="ct-cell"><div class="cv-partial">⚠️</div></div>
+      <div class="ct-cell"><div class="cv-no">❌</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ WHY CARDS ══ -->
+<div class="why-section">
+  <h2>🏆 6 أسباب تجعل Aqario الخيار الأول</h2>
+  <p>ليس فقط "منصة أخرى" — بل إعادة بناء من الصفر للسوق المغربي</p>
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="wc-icon">🔐</span>
+      <div class="wc-title">ثقة حقيقية وموثقة</div>
+      <div class="wc-desc">كل مالك يمر بـ 3 مراحل توثيق: هاتف + هوية + وثيقة الملكية. مش بس رقم هاتف كيفاش عند المنافسين.</div>
+      <span class="wc-tag">الوحيد في المغرب</span>
+    </div>
+    <div class="why-card">
+      <span class="wc-icon">🤖</span>
+      <div class="wc-title">خوارزمية منع التكرار</div>
+      <div class="wc-desc">بـ pHash للصور + NLP للنصوص + PostGIS للموقع، نمنع تكرار الإعلانات تلقائياً. Mubawab ما عندهاش هاد الشي.</div>
+      <span class="wc-tag">AI محلي</span>
+    </div>
+    <div class="why-card">
+      <span class="wc-icon">💡</span>
+      <div class="wc-title">السعر العادل مجاناً</div>
+      <div class="wc-desc">نقدر نقدر السعر العادل لكل عقار بناءً على بيانات السوق المحلي. عند Mubawab هاد الميزة مدفوعة Premium فقط.</div>
+      <span class="wc-tag">مجاني للجميع</span>
+    </div>
+    <div class="why-card">
+      <span class="wc-icon">🗺</span>
+      <div class="wc-title">خريطة أولاً دايماً</div>
+      <div class="wc-desc">الخريطة هي أساس التجربة مش ملحق. كل إعلان بموقع GPS دقيق. Avito ما عندهاش خريطة أصلاً.</div>
+      <span class="wc-tag">Map-First</span>
+    </div>
+    <div class="why-card">
+      <span class="wc-icon">⚡</span>
+      <div class="wc-title">60 ثانية للنشر</div>
+      <div class="wc-desc">3 خطوات فقط ونشر الإعلان. بدون فورم طويل ومعقد. الوقت الفعلي عند المستخدمين: أقل من دقيقة في المتوسط.</div>
+      <span class="wc-tag">أسرع في المغرب</span>
+    </div>
+    <div class="why-card">
+      <span class="wc-icon">🇲🇦</span>
+      <div class="wc-title">صُنع للمغرب فقط</div>
+      <div class="wc-desc">Mubawab منصة دولية، Avito عامة. Aqario بُني من الصفر للسوق المغربي: 47 مدينة، MAD، عربية RTL، وأحياء مفصلة.</div>
+      <span class="wc-tag">100% مغربي</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROOF ══ -->
+<div class="proof-section">
+  <h2>💬 آراء مستخدمين سابقين قدموا من المنافسين</h2>
+  <div class="proof-grid">
+
+    <div class="proof-card">
+      <div class="pc-stars">⭐⭐⭐⭐⭐</div>
+      <div class="pc-text">"كنت نستعمل Mubawab لمدة سنتين، كل مرة نعمل إعلان كيطلع مكرر ديالي نفسه 3 مرات من وكالات. فـ Aqario ما شفتش هاد المشكل إطلاقاً."</div>
+      <div class="pc-user">
+        <div class="pc-av" style="background:linear-gradient(135deg,#7C3AED,#06B6D4)">يم</div>
+        <div>
+          <div class="pc-name">يوسف المنصوري</div>
+          <div class="pc-meta">مالك عقار — الدار البيضاء</div>
+          <span class="pc-platform pp-mubawab">جاء من Mubawab</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="proof-card">
+      <div class="pc-stars">⭐⭐⭐⭐⭐</div>
+      <div class="pc-text">"فـ Avito خاصني نمشي للشخص وهو مكانش في العقار. فـ Aqario المالك موثق والعنوان على الخريطة — بالضبط فين هو."</div>
+      <div class="pc-user">
+        <div class="pc-av" style="background:linear-gradient(135deg,#F59E0B,#EF4444)">فر</div>
+        <div>
+          <div class="pc-name">فريدة الراضي</div>
+          <div class="pc-meta">مشترية — الرباط</div>
+          <span class="pc-platform pp-avito">جاءت من Avito</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="proof-card">
+      <div class="pc-stars">⭐⭐⭐⭐⭐</div>
+      <div class="pc-text">"السعر العادل ساعدني نفاوض — عرفت بالضبط أن البائع طالب 15% فوق السعر الحقيقي. هاد الشي ما عندوش المنافسين بلاش."</div>
+      <div class="pc-user">
+        <div class="pc-av" style="background:linear-gradient(135deg,#10B981,#06B6D4)">كر</div>
+        <div>
+          <div class="pc-name">كريم الشاوي</div>
+          <div class="pc-meta">مستثمر عقاري — مراكش</div>
+          <span class="pc-platform pp-mubawab">جاء من Mubawab</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FINAL CTA ══ -->
+<div class="cta-section">
+  <div class="cta-box">
+    <h2>جرب Aqario اليوم<br>وفرّق بنفسك 🚀</h2>
+    <p>انضم لـ +12,400 مستخدم اختاروا الثقة على الكثرة</p>
+    <div class="cta-btns">
+      <button class="cta-primary">🏠 ابحث عن عقار الآن</button>
+      <button class="cta-ghost">＋ انشر إعلانك مجاناً</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Animated scores ───────────────────────────────────────────
+function countTo(id, target, dur=1400) {
+  const el = document.getElementById(id), t0 = Date.now()
+  const tick = () => {
+    const p = Math.min((Date.now()-t0)/dur, 1)
+    const ease = 1 - Math.pow(1-p, 4)
+    el.textContent = Math.round(ease * target)
+    if (p < 1) requestAnimationFrame(tick)
+  }; tick()
+}
+
+// ── Animated bars ─────────────────────────────────────────────
+function animateBar(id, pct, delay=300) {
+  setTimeout(() => {
+    document.getElementById(id).style.width = pct + '%'
+  }, delay)
+}
+
+// ── Row hover highlight ───────────────────────────────────────
+document.querySelectorAll('.ct-row').forEach(row => {
+  row.addEventListener('mouseenter', () => {
+    const aqCol = row.querySelector('.aqario-col')
+    if (aqCol) aqCol.style.background = 'rgba(124,58,237,.1)'
+  })
+  row.addEventListener('mouseleave', () => {
+    const aqCol = row.querySelector('.aqario-col')
+    if (aqCol) aqCol.style.background = 'rgba(124,58,237,.05)'
+  })
+})
+
+// ── Map tab switching ─────────────────────────────────────────
+document.querySelectorAll('.mst').forEach(t => {
+  t.addEventListener('click', function() {
+    document.querySelectorAll('.mst').forEach(x => x.classList.remove('on'))
+    this.classList.add('on')
+  })
+})
+
+// ── Init ─────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    countTo('sc-aqario',  93, 1400)
+    countTo('sc-mubawab', 61, 1200)
+    countTo('sc-avito',   54, 1100)
+    animateBar('bar-aqario',  93, 400)
+    animateBar('bar-mubawab', 61, 500)
+    animateBar('bar-avito',   54, 600)
+  }, 300)
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aqario – Database Schema</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07050F;
+    --card: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.08);
+    --primary: #7C3AED;
+    --accent: #06B6D4;
+    --gold: #F59E0B;
+    --green: #10B981;
+    --red: #EF4444;
+    --pink: #EC4899;
+    --text: #F0EFF6;
+    --muted: #8B8BAE;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; overflow-x: auto;
+  }
+
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(91,33,182,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 85%, rgba(6,182,212,0.12) 0%, transparent 60%);
+  }
+
+  /* HEADER */
+  header {
+    position:relative; z-index:10;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(7,5,15,0.9); backdrop-filter:blur(20px);
+  }
+  .logo { display:flex; align-items:center; gap:10px; }
+  .logo-icon {
+    width:34px; height:34px;
+    background:linear-gradient(135deg,var(--primary),#4F46E5);
+    border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:15px;
+  }
+  .logo-text { font-size:20px; font-weight:700; background:linear-gradient(135deg,#A78BFA,#67E8F9); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .header-title { font-size:15px; color:var(--muted); }
+  .header-badge {
+    display:flex; gap:8px;
+  }
+  .hbadge {
+    padding:5px 12px; border-radius:20px; font-size:12px; font-weight:700;
+    border: 1px solid;
+  }
+  .hb-blue { background:rgba(124,58,237,0.1); border-color:rgba(124,58,237,0.3); color:#C4B5FD; }
+  .hb-cyan { background:rgba(6,182,212,0.1); border-color:rgba(6,182,212,0.25); color:#67E8F9; }
+
+  /* LEGEND */
+  .legend {
+    position:relative; z-index:10;
+    display:flex; gap:20px; align-items:center; flex-wrap:wrap;
+    padding:14px 40px;
+    background:rgba(7,5,15,0.7);
+    border-bottom:1px solid var(--border);
+    font-size:12px; color:var(--muted);
+  }
+  .leg-item { display:flex; align-items:center; gap:6px; }
+  .leg-dot { width:10px; height:10px; border-radius:3px; }
+
+  /* DIAGRAM AREA */
+  .diagram {
+    position:relative; z-index:1;
+    padding:40px;
+    min-width:1400px;
+  }
+
+  /* TABLE CARDS */
+  .db-table {
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px; overflow:hidden;
+    position:absolute;
+    min-width:240px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.3);
+    transition:all 0.2s;
+  }
+  .db-table:hover {
+    border-color:rgba(124,58,237,0.4);
+    box-shadow:0 12px 40px rgba(91,33,182,0.2);
+    z-index:50;
+  }
+
+  .table-head {
+    padding:10px 14px;
+    display:flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:700;
+    letter-spacing:0.3px;
+  }
+  .th-icon { font-size:14px; }
+
+  .table-body { padding:6px 0; }
+  .col-row {
+    display:flex; align-items:center; gap:8px;
+    padding:5px 14px; font-size:11px;
+    transition:background 0.15s; cursor:default;
+  }
+  .col-row:hover { background:rgba(255,255,255,0.04); }
+  .col-key { width:16px; font-size:10px; }
+  .col-name { font-family:'JetBrains Mono',monospace; font-size:11px; flex:1; }
+  .col-type { color:var(--muted); font-size:10px; font-family:'JetBrains Mono',monospace; }
+  .col-badge {
+    font-size:9px; padding:1px 6px; border-radius:4px; font-weight:700;
+  }
+  .pk { background:rgba(245,158,11,0.2); color:var(--gold); }
+  .fk { background:rgba(6,182,212,0.15); color:var(--accent); }
+  .nn { background:rgba(16,185,129,0.12); color:var(--green); }
+  .idx{ background:rgba(124,58,237,0.15); color:#C4B5FD; }
+
+  .col-divider { height:1px; background:rgba(255,255,255,0.04); margin:4px 0; }
+
+  /* Table color themes */
+  .t-purple .table-head { background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(79,70,229,0.2)); border-bottom:1px solid rgba(124,58,237,0.2); color:#C4B5FD; }
+  .t-cyan   .table-head { background:linear-gradient(135deg,rgba(6,182,212,0.25),rgba(59,130,246,0.15)); border-bottom:1px solid rgba(6,182,212,0.2); color:#67E8F9; }
+  .t-green  .table-head { background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(5,150,105,0.15)); border-bottom:1px solid rgba(16,185,129,0.2); color:#6EE7B7; }
+  .t-gold   .table-head { background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(217,119,6,0.15)); border-bottom:1px solid rgba(245,158,11,0.2); color:#FCD34D; }
+  .t-pink   .table-head { background:linear-gradient(135deg,rgba(236,72,153,0.25),rgba(190,24,93,0.15)); border-bottom:1px solid rgba(236,72,153,0.2); color:#F9A8D4; }
+  .t-red    .table-head { background:linear-gradient(135deg,rgba(239,68,68,0.25),rgba(185,28,28,0.15)); border-bottom:1px solid rgba(239,68,68,0.2); color:#FCA5A5; }
+  .t-slate  .table-head { background:linear-gradient(135deg,rgba(100,116,139,0.25),rgba(71,85,105,0.15)); border-bottom:1px solid rgba(100,116,139,0.2); color:#CBD5E1; }
+
+  /* SVG connectors */
+  .connectors { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .connector { fill:none; stroke-width:1.5; opacity:0.4; }
+  .cn-purple { stroke:#7C3AED; }
+  .cn-cyan   { stroke:#06B6D4; }
+  .cn-green  { stroke:#10B981; }
+  .cn-gold   { stroke:#F59E0B; }
+  .cn-pink   { stroke:#EC4899; }
+
+  /* POSITIONS */
+  /* Row 1 */
+  #t-users      { top:40px;   left:40px;  width:260px; }
+  #t-agencies   { top:40px;   left:340px; width:240px; }
+  #t-cities     { top:40px;   left:620px; width:240px; }
+  #t-ptypes     { top:40px;   left:900px; width:240px; }
+  #t-plans      { top:40px;   left:1180px;width:240px; }
+  /* Row 2 - center */
+  #t-properties { top:380px;  left:340px; width:300px; }
+  /* Row 3 */
+  #t-images     { top:380px;  left:680px; width:240px; }
+  #t-favorites  { top:380px;  left:960px; width:220px; }
+  #t-contacts   { top:380px;  left:1210px;width:240px; }
+  /* Row 4 */
+  #t-messages   { top:700px;  left:40px;  width:240px; }
+  #t-reviews    { top:700px;  left:320px; width:240px; }
+  #t-views      { top:700px;  left:600px; width:240px; }
+  #t-searches   { top:700px;  left:880px; width:240px; }
+  #t-notifs     { top:700px;  left:1160px;width:240px; }
+  #t-subs       { top:700px;  left:1440px;width:240px; }
+
+  /* STATS BAR */
+  .stats-bar {
+    position:relative; z-index:10;
+    display:flex; gap:0;
+    border-top:1px solid var(--border);
+    background:rgba(7,5,15,0.9);
+  }
+  .stat-item {
+    flex:1; padding:16px 24px; text-align:center;
+    border-left:1px solid var(--border);
+  }
+  .stat-item:first-child { border-left:none; }
+  .stat-num { font-size:22px; font-weight:800; font-family:'JetBrains Mono',monospace; background:linear-gradient(135deg,#A78BFA,#67E8F9); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .stat-lbl { font-size:11px; color:var(--muted); margin-top:2px; }
+
+  /* BOTTOM: SQL PREVIEW */
+  .sql-section {
+    position:relative; z-index:10;
+    padding:32px 40px;
+    border-top:1px solid var(--border);
+    background:rgba(7,5,15,0.85);
+  }
+  .sql-title { font-size:15px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .sql-tabs { display:flex; gap:6px; margin-bottom:14px; }
+  .sqltab { padding:6px 14px; border-radius:8px; font-size:12px; font-weight:700; cursor:pointer; border:1px solid var(--border); background:transparent; color:var(--muted); font-family:'Cairo',sans-serif; transition:all 0.2s; }
+  .sqltab.active { background:rgba(124,58,237,0.15); border-color:rgba(124,58,237,0.3); color:#C4B5FD; }
+  pre {
+    background:rgba(255,255,255,0.03); border:1px solid var(--border);
+    border-radius:12px; padding:20px; overflow-x:auto;
+    font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.7;
+    color:#E2E8F0;
+  }
+  .kw { color:#C4B5FD; } /* keywords */
+  .tp { color:#67E8F9; } /* types */
+  .st { color:#FCD34D; } /* strings */
+  .cm { color:#475569; } /* comments */
+  .fn { color:#6EE7B7; } /* functions */
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🏠</div>
+    <span class="logo-text">Aqario</span>
+  </div>
+  <div class="header-title">🗂️ Database Schema — PostgreSQL / Supabase — v1.0 MVP</div>
+  <div class="header-badge">
+    <span class="hbadge hb-blue">15 tables</span>
+    <span class="hbadge hb-cyan">Supabase RLS</span>
+    <span class="hbadge hb-blue">PostGIS</span>
+  </div>
+</header>
+
+<!-- LEGEND -->
+<div class="legend">
+  <strong style="color:var(--text)">مفتاح:</strong>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div> PK – مفتاح أساسي</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--accent)"></div> FK – مفتاح خارجي</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div> NOT NULL</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--primary)"></div> INDEX</div>
+  <span style="margin-right:auto"></span>
+  <span>💡 مرّر على الجدول لرؤية التفاصيل</span>
+</div>
+
+<!-- DIAGRAM -->
+<div style="overflow-x:auto; position:relative;">
+<div class="diagram" style="height:980px;">
+
+  <!-- SVG CONNECTORS -->
+  <svg class="connectors" style="position:absolute;top:0;left:0;width:1700px;height:980px;">
+    <!-- users → properties -->
+    <path class="connector cn-purple" d="M 300,160 L 340,500" stroke-dasharray="5,3"/>
+    <!-- users → agencies -->
+    <path class="connector cn-cyan" d="M 300,80 L 340,80"/>
+    <!-- agencies → properties -->
+    <path class="connector cn-cyan" d="M 460,200 L 460,380"/>
+    <!-- cities → properties -->
+    <path class="connector cn-green" d="M 620,120 L 490,380"/>
+    <!-- ptypes → properties -->
+    <path class="connector cn-gold" d="M 900,120 L 560,380"/>
+    <!-- properties → images -->
+    <path class="connector cn-purple" d="M 640,500 L 680,500"/>
+    <!-- properties → favorites -->
+    <path class="connector cn-pink" d="M 640,520 L 960,450"/>
+    <!-- properties → contacts -->
+    <path class="connector cn-gold" d="M 640,530 L 1210,480"/>
+    <!-- contacts → messages -->
+    <path class="connector cn-cyan" d="M 1210,580 L 280,750"/>
+    <!-- users → favorites -->
+    <path class="connector cn-pink" d="M 200,300 L 200,700 L 960,700 L 960,600" stroke-dasharray="4,3"/>
+    <!-- users → searches -->
+    <path class="connector cn-green" d="M 200,320 L 200,720 L 880,720"/>
+    <!-- users → notifs -->
+    <path class="connector cn-gold" d="M 200,340 L 200,740 L 1160,740"/>
+    <!-- plans → subscriptions -->
+    <path class="connector cn-pink" d="M 1300,200 L 1300,700 L 1440,700"/>
+  </svg>
+
+  <!-- TABLE: users -->
+  <div class="db-table t-purple" id="t-users">
+    <div class="table-head"><span class="th-icon">👤</span> users</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">email</span><span class="col-type">TEXT UNIQUE</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">phone</span><span class="col-type">TEXT</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">full_name</span><span class="col-badge nn">NN</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">role</span><span class="col-type">individual|agency</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">lang</span><span class="col-type">ar|fr</span></div>
+      <div class="col-divider"></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">phone_verified</span><span class="col-type">BOOL</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">identity_verified</span><span class="col-type">BOOL</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">ownership_verified</span><span class="col-type">BOOL</span></div>
+      <div class="col-divider"></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">plan</span><span class="col-type">free|premium</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">plan_expires_at</span><span class="col-type">TIMESTAMPTZ</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: agencies -->
+  <div class="db-table t-cyan" id="t-agencies">
+    <div class="table-head"><span class="th-icon">🏛</span> agencies</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">user_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">name</span><span class="col-badge nn">NN</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">name_fr</span><span class="col-type">TEXT</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">license_number</span><span class="col-type">UNIQUE</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">city_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">verified</span><span class="col-type">BOOL</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: cities -->
+  <div class="db-table t-green" id="t-cities">
+    <div class="table-head"><span class="th-icon">🏙</span> cities</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">name_ar</span><span class="col-badge nn">NN</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">name_fr</span><span class="col-badge nn">NN</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">slug</span><span class="col-type">UNIQUE</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">region</span><span class="col-type">TEXT</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">latitude</span><span class="col-type">NUMERIC</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">longitude</span><span class="col-type">NUMERIC</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: property_types -->
+  <div class="db-table t-gold" id="t-ptypes">
+    <div class="table-head"><span class="th-icon">🏷</span> property_types</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">name_ar</span><span class="col-badge nn">NN</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">name_fr</span><span class="col-badge nn">NN</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">slug</span><span class="col-type">UNIQUE</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">icon</span><span class="col-type">TEXT</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: subscriptions (plans) -->
+  <div class="db-table t-pink" id="t-plans">
+    <div class="table-head"><span class="th-icon">⭐</span> subscriptions</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">user_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">plan</span><span class="col-type">premium|agency</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">property_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">amount_mad</span><span class="col-badge nn">NN</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">status</span><span class="col-type">pending|active</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">expires_at</span><span class="col-type">TIMESTAMPTZ</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: properties (CORE) -->
+  <div class="db-table t-purple" id="t-properties" style="min-width:300px;">
+    <div class="table-head" style="background:linear-gradient(135deg,rgba(124,58,237,0.5),rgba(79,70,229,0.35)); font-size:14px;">
+      <span class="th-icon">🏠</span> properties <span style="font-size:10px;opacity:0.7;margin-right:auto">⭐ CORE</span>
+    </div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">ref_code</span><span class="col-type">AQ-2026-XXXXX</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">owner_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">agency_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">type_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">city_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-divider"></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">operation</span><span class="col-type">sale|rent|both</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">title_ar / title_fr</span><span class="col-badge nn">NN</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">location</span><span class="col-type">GEOGRAPHY 📍</span><span class="col-badge idx">IDX</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">price</span><span class="col-type">NUMERIC (MAD)</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">price_ai_estimate</span><span class="col-type">NUMERIC</span></div>
+      <div class="col-divider"></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">area / rooms / floors</span><span class="col-type">INT</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">has_elevator / pool…</span><span class="col-type">BOOL×10</span></div>
+      <div class="col-divider"></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">status</span><span class="col-type">active|pending…</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">image_hash[]</span><span class="col-type">TEXT[] 🔍</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">views / favorites / contacts</span><span class="col-type">INT</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: property_images -->
+  <div class="db-table t-slate" id="t-images">
+    <div class="table-head"><span class="th-icon">🖼</span> property_images</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">property_id</span><span class="col-badge fk">FK</span><span class="col-badge idx">IDX</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">url</span><span class="col-badge nn">NN</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">storage_path</span><span class="col-type">TEXT</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">is_cover</span><span class="col-type">BOOL</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">perceptual_hash</span><span class="col-type">TEXT 🤖</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">order_index</span><span class="col-type">INT</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: favorites -->
+  <div class="db-table t-pink" id="t-favorites">
+    <div class="table-head"><span class="th-icon">🤍</span> favorites</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">user_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">property_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">created_at</span><span class="col-type">TIMESTAMPTZ</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">UNIQUE(user,property)</span><span class="col-type">✓</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: contact_requests -->
+  <div class="db-table t-gold" id="t-contacts">
+    <div class="table-head"><span class="th-icon">📞</span> contact_requests</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">property_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">requester_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">owner_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">channel</span><span class="col-type">call|whatsapp|msg</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">message</span><span class="col-type">TEXT</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">seen_by_owner</span><span class="col-type">BOOL</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: messages -->
+  <div class="db-table t-cyan" id="t-messages">
+    <div class="table-head"><span class="th-icon">💬</span> messages</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">contact_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">sender_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">content</span><span class="col-badge nn">NN</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">read_at</span><span class="col-type">TIMESTAMPTZ</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: reviews -->
+  <div class="db-table t-green" id="t-reviews">
+    <div class="table-head"><span class="th-icon">⭐</span> reviews</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">reviewer_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">owner_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">property_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">rating</span><span class="col-type">INT 1–5</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">comment</span><span class="col-type">TEXT</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: property_views -->
+  <div class="db-table t-slate" id="t-views">
+    <div class="table-head"><span class="th-icon">👁</span> property_views</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">property_id</span><span class="col-badge fk">FK</span><span class="col-badge idx">IDX</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">user_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">source</span><span class="col-type">map|list|search</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">device</span><span class="col-type">mobile|desktop</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">ip_hash</span><span class="col-type">TEXT 🔐</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: saved_searches -->
+  <div class="db-table t-purple" id="t-searches">
+    <div class="table-head"><span class="th-icon">🔔</span> saved_searches</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">user_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">city_id / type_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">price_min / price_max</span><span class="col-type">NUMERIC</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">alert_email</span><span class="col-type">BOOL</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">alert_push</span><span class="col-type">BOOL</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: notifications -->
+  <div class="db-table t-gold" id="t-notifs">
+    <div class="table-head"><span class="th-icon">🔔</span> notifications</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">user_id</span><span class="col-badge fk">FK</span><span class="col-badge idx">IDX</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">type</span><span class="col-type">new_message|…</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">title_ar / title_fr</span><span class="col-type">TEXT</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">read</span><span class="col-type">BOOL</span></div>
+    </div>
+  </div>
+
+  <!-- TABLE: duplicate_reports (bonus) -->
+  <div class="db-table t-red" id="t-subs">
+    <div class="table-head"><span class="th-icon">🚨</span> duplicate_reports</div>
+    <div class="table-body">
+      <div class="col-row"><span class="col-key">🔑</span><span class="col-name">id</span><span class="col-badge pk">PK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">reporter_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">property_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key">🔗</span><span class="col-name">duplicate_of_id</span><span class="col-badge fk">FK</span></div>
+      <div class="col-row"><span class="col-key"></span><span class="col-name">status</span><span class="col-type">pending|confirmed</span></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">15</div><div class="stat-lbl">جداول</div></div>
+  <div class="stat-item"><div class="stat-num">6</div><div class="stat-lbl">Foreign Keys رئيسية</div></div>
+  <div class="stat-item"><div class="stat-num">12</div><div class="stat-lbl">Indexes محسّنة</div></div>
+  <div class="stat-item"><div class="stat-num">5</div><div class="stat-lbl">Triggers تلقائية</div></div>
+  <div class="stat-item"><div class="stat-num">2</div><div class="stat-lbl">Views جاهزة</div></div>
+  <div class="stat-item"><div class="stat-num">ar|fr</div><div class="stat-lbl">ثنائي اللغة</div></div>
+</div>
+
+<!-- SQL PREVIEW -->
+<div class="sql-section">
+  <div class="sql-title">💾 SQL Preview</div>
+  <div class="sql-tabs">
+    <button class="sqltab active">properties</button>
+    <button class="sqltab">users</button>
+    <button class="sqltab">Triggers</button>
+    <button class="sqltab">Views</button>
+  </div>
+  <pre><span class="cm">-- ============================================
+-- TABLE: properties  (core table)
+-- ============================================</span>
+<span class="kw">CREATE TABLE</span> properties (
+  id                <span class="tp">UUID</span> <span class="kw">PRIMARY KEY</span> <span class="kw">DEFAULT</span> <span class="fn">uuid_generate_v4</span>(),
+  ref_code          <span class="tp">TEXT</span> <span class="kw">UNIQUE NOT NULL</span>,       <span class="cm">-- AQ-2026-00041</span>
+  owner_id          <span class="tp">UUID</span> <span class="kw">NOT NULL REFERENCES</span> users(id),
+  type_id           <span class="tp">INT</span>  <span class="kw">NOT NULL REFERENCES</span> property_types(id),
+  city_id           <span class="tp">INT</span>  <span class="kw">NOT NULL REFERENCES</span> cities(id),
+  operation         <span class="tp">TEXT</span> <span class="kw">NOT NULL CHECK</span> (operation <span class="kw">IN</span> (<span class="st">'sale'</span>, <span class="st">'rent'</span>, <span class="st">'both'</span>)),
+
+  title_ar          <span class="tp">TEXT</span> <span class="kw">NOT NULL</span>,
+  title_fr          <span class="tp">TEXT</span>,
+  location          <span class="tp">GEOGRAPHY</span>(POINT, 4326),   <span class="cm">-- PostGIS geolocation</span>
+
+  price             <span class="tp">NUMERIC</span>(14,2) <span class="kw">NOT NULL</span>,
+  price_ai_estimate <span class="tp">NUMERIC</span>(14,2),
+
+  status            <span class="tp">TEXT</span> <span class="kw">DEFAULT</span> <span class="st">'pending'</span>
+                    <span class="kw">CHECK</span> (status <span class="kw">IN</span> (<span class="st">'active'</span>,<span class="st">'pending'</span>,<span class="st">'rejected'</span>,<span class="st">'sold'</span>)),
+  image_hash        <span class="tp">TEXT</span>[],                   <span class="cm">-- للكشف عن التكرار 🤖</span>
+  views_count       <span class="tp">INT</span> <span class="kw">DEFAULT</span> 0,
+  created_at        <span class="tp">TIMESTAMPTZ</span> <span class="kw">DEFAULT</span> <span class="fn">NOW</span>()
+);
+
+<span class="cm">-- Geospatial index (for map queries)</span>
+<span class="kw">CREATE INDEX</span> idx_properties_location <span class="kw">ON</span> properties <span class="kw">USING</span> GIST(location);
+<span class="kw">CREATE INDEX</span> idx_properties_city     <span class="kw">ON</span> properties(city_id);
+<span class="kw">CREATE INDEX</span> idx_properties_price    <span class="kw">ON</span> properties(price);</pre>
+</div>
+
+</body>
+</html>

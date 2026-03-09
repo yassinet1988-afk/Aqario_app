@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aqario – نشر إعلان في 60 ثانية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #07050F;
+  --bg2:     #0D0A1E;
+  --card:    rgba(255,255,255,0.04);
+  --border:  rgba(255,255,255,0.08);
+  --primary: #7C3AED;
+  --accent:  #4F46E5;
+  --teal:    #06B6D4;
+  --gold:    #F59E0B;
+  --green:   #10B981;
+  --red:     #EF4444;
+  --text:    #F0EFF6;
+  --muted:   #8B8BAE;
+  --r:       16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 80% 0%,rgba(124,58,237,.2) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 5% 85%,rgba(6,182,212,.1) 0%,transparent 60%);
+}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 40px;
+  background:rgba(7,5,15,.88);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Tajawal',sans-serif;font-size:22px;font-weight:900;
+  background:linear-gradient(135deg,#A78BFA,#67E8F9);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:flex;align-items:center;gap:8px;
+}
+.logo-dot{
+  width:30px;height:30px;border-radius:9px;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;-webkit-text-fill-color:initial;flex-shrink:0;
+}
+.nav-timer{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 16px;border-radius:20px;
+  background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);
+  font-size:13px;font-weight:700;color:#6EE7B7;
+}
+.timer-num{
+  font-family:'Tajawal',sans-serif;font-size:20px;font-weight:900;
+  color:var(--green);min-width:28px;text-align:center;
+  transition:color .3s;
+}
+.timer-num.warn{color:var(--gold);}
+.timer-num.danger{color:var(--red);}
+.nav-save{
+  padding:8px 18px;border:1px solid var(--border);border-radius:10px;
+  background:transparent;color:var(--muted);font-family:'Cairo',sans-serif;
+  font-size:13px;cursor:pointer;transition:all .2s;
+}
+.nav-save:hover{border-color:rgba(124,58,237,.4);color:var(--text);}
+
+/* ── LAYOUT ── */
+.page{
+  position:relative;z-index:1;
+  max-width:960px;margin:0 auto;
+  padding:36px 40px 80px;
+}
+
+/* ── HEADER ── */
+.page-head{text-align:center;margin-bottom:36px;}
+.page-head .badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 16px;border-radius:20px;font-size:12px;font-weight:700;
+  background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.25);
+  color:#C4B5FD;margin-bottom:14px;
+}
+.page-head h1{
+  font-family:'Tajawal',sans-serif;font-size:34px;font-weight:900;
+  line-height:1.15;margin-bottom:8px;
+}
+.page-head p{font-size:15px;color:var(--muted);}
+
+/* ── STEPS PROGRESS ── */
+.steps-bar{
+  display:flex;align-items:center;
+  margin-bottom:40px;
+}
+.step-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;
+  cursor:pointer;
+}
+.step-circle{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;
+  border:2px solid var(--border);
+  background:rgba(255,255,255,.03);
+  color:var(--muted);
+  transition:all .35s;position:relative;z-index:1;
+}
+.step-circle.done{
+  background:var(--green);border-color:var(--green);
+  color:#fff;-webkit-text-fill-color:#fff;
+  box-shadow:0 0 18px rgba(16,185,129,.35);
+}
+.step-circle.active{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  border-color:transparent;color:#fff;-webkit-text-fill-color:#fff;
+  box-shadow:0 0 22px rgba(124,58,237,.45);
+  transform:scale(1.1);
+}
+.step-label{font-size:11px;color:var(--muted);font-weight:600;text-align:center;}
+.step-label.active{color:#C4B5FD;}
+.step-label.done{color:var(--green);}
+.step-line{
+  flex:1;height:2px;margin-bottom:18px;
+  background:var(--border);
+  transition:background .4s;
+}
+.step-line.done{background:var(--green);}
+
+/* ── PANELS ── */
+.panel{display:none;animation:fadeUp .3s ease;}
+.panel.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION CARD ── */
+.scard{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:22px;padding:28px;margin-bottom:20px;
+  transition:border-color .2s;
+}
+.scard:focus-within{border-color:rgba(124,58,237,.3);}
+.scard-title{
+  font-family:'Tajawal',sans-serif;font-size:16px;font-weight:800;
+  display:flex;align-items:center;gap:8px;margin-bottom:18px;
+}
+.scard-title .icon{font-size:20px;}
+.scard-sub{font-size:12px;color:var(--muted);font-weight:400;margin-right:4px;}
+
+/* ── TYPE GRID ── */
+.type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.type-btn{
+  border:1px solid var(--border);border-radius:16px;
+  padding:16px 10px;text-align:center;cursor:pointer;
+  background:rgba(255,255,255,.02);
+  transition:all .2s;user-select:none;
+}
+.type-btn:hover{border-color:rgba(124,58,237,.3);background:rgba(124,58,237,.06);}
+.type-btn.sel{
+  background:rgba(124,58,237,.14);
+  border-color:rgba(124,58,237,.45);
+}
+.type-btn .t-ico{font-size:28px;margin-bottom:7px;}
+.type-btn .t-lbl{font-size:12px;font-weight:700;color:var(--muted);}
+.type-btn.sel .t-lbl{color:#C4B5FD;}
+
+/* ── OP TOGGLE ── */
+.op-toggle{
+  display:flex;background:rgba(0,0,0,.3);
+  border-radius:14px;padding:4px;gap:3px;
+}
+.op-btn{
+  flex:1;padding:10px;border-radius:11px;
+  font-size:13px;font-weight:700;text-align:center;
+  cursor:pointer;color:var(--muted);
+  transition:all .2s;
+  border:none;background:transparent;
+  font-family:'Cairo',sans-serif;
+}
+.op-btn.active{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;-webkit-text-fill-color:#fff;
+  box-shadow:0 4px 14px rgba(124,58,237,.4);
+}
+
+/* ── UPLOAD ZONE ── */
+.upload-zone{
+  border:2px dashed rgba(124,58,237,.3);border-radius:18px;
+  padding:32px;text-align:center;cursor:pointer;
+  background:rgba(124,58,237,.04);
+  transition:all .25s;
+  position:relative;overflow:hidden;
+}
+.upload-zone:hover,
+.upload-zone.drag{
+  border-color:rgba(124,58,237,.55);
+  background:rgba(124,58,237,.09);
+  transform:scale(1.01);
+}
+.upload-zone input{display:none;}
+.uz-icon{font-size:40px;margin-bottom:10px;}
+.uz-title{font-size:15px;font-weight:700;margin-bottom:4px;}
+.uz-sub{font-size:12px;color:var(--muted);}
+
+/* ── IMAGE PREVIEWS ── */
+.img-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:10px;
+  margin-top:14px;
+}
+.img-thumb{
+  aspect-ratio:1;border-radius:12px;overflow:hidden;
+  position:relative;border:2px solid var(--border);
+  background:rgba(255,255,255,.03);
+  display:flex;align-items:center;justify-content:center;font-size:28px;
+  cursor:pointer;transition:all .2s;
+}
+.img-thumb:hover .rm-btn{opacity:1;}
+.img-thumb.cover{border-color:var(--gold);}
+.cover-badge{
+  position:absolute;bottom:5px;right:5px;
+  background:rgba(245,158,11,.9);
+  border-radius:5px;padding:2px 6px;font-size:9px;font-weight:700;color:#fff;
+  -webkit-text-fill-color:#fff;
+}
+.rm-btn{
+  position:absolute;top:4px;left:4px;
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(239,68,68,.9);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:#fff;-webkit-text-fill-color:#fff;
+  opacity:0;transition:opacity .15s;cursor:pointer;
+}
+.add-more{
+  aspect-ratio:1;border-radius:12px;
+  border:2px dashed rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;color:var(--muted);cursor:pointer;
+  transition:all .2s;
+}
+.add-more:hover{border-color:rgba(124,58,237,.4);color:#A78BFA;}
+
+/* ── FORM INPUTS ── */
+.field{margin-bottom:14px;}
+.field-label{
+  font-size:11px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.5px;
+  margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;
+}
+.field-label .req{color:var(--red);font-size:13px;}
+.field-label .count{font-size:10px;color:var(--muted);text-transform:none;letter-spacing:0;}
+.finput,
+.ftextarea,
+.fselect{
+  width:100%;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:12px;
+  padding:11px 14px;
+  color:var(--text);
+  font-family:'Cairo',sans-serif;font-size:14px;
+  outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  -webkit-text-fill-color:var(--text);
+}
+.finput:focus,.ftextarea:focus,.fselect:focus{
+  border-color:rgba(124,58,237,.45);
+  box-shadow:0 0 0 3px rgba(124,58,237,.1);
+}
+.finput::placeholder,.ftextarea::placeholder{color:var(--muted);}
+.ftextarea{resize:vertical;min-height:90px;}
+.fselect{cursor:pointer;appearance:none;}
+.fselect option{background:#110d24;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+
+/* ── PRICE INPUT ── */
+.price-wrap{position:relative;}
+.price-currency{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  font-size:12px;font-weight:700;color:var(--muted);
+  pointer-events:none;
+}
+.price-wrap .finput{padding-left:50px;}
+
+/* ── AI ESTIMATE BAR ── */
+.estimate-bar{
+  margin-top:12px;
+  background:rgba(16,185,129,.07);
+  border:1px solid rgba(16,185,129,.2);
+  border-radius:12px;padding:12px 14px;
+  display:flex;align-items:center;gap:10px;
+  animation:fadeUp .3s ease;
+}
+.est-icon{font-size:20px;flex-shrink:0;}
+.est-text{font-size:12px;}
+.est-text strong{color:var(--green);}
+.est-range{
+  display:flex;align-items:center;gap:6px;margin-top:4px;
+}
+.est-min,.est-max{font-size:11px;color:var(--muted);}
+.est-track{
+  flex:1;height:5px;background:rgba(255,255,255,.08);
+  border-radius:10px;overflow:hidden;position:relative;
+}
+.est-fill{
+  position:absolute;height:100%;
+  background:linear-gradient(90deg,var(--green),var(--teal));
+  border-radius:10px;
+  transition:width .6s,right .6s;
+}
+.est-pin{
+  position:absolute;top:-4px;width:13px;height:13px;
+  border-radius:50%;background:#fff;
+  border:3px solid var(--green);
+  transition:left .6s;
+}
+
+/* ── FEATURES TOGGLES ── */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+.feat-toggle{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 13px;border-radius:11px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+  cursor:pointer;font-size:13px;
+  transition:all .2s;user-select:none;
+}
+.feat-toggle:hover{border-color:rgba(124,58,237,.25);}
+.feat-toggle.on{
+  background:rgba(16,185,129,.08);
+  border-color:rgba(16,185,129,.3);color:var(--green);
+}
+.ft-dot{
+  width:9px;height:9px;border-radius:50%;margin-right:auto;
+  background:rgba(255,255,255,.18);
+  flex-shrink:0;transition:background .2s;
+}
+.feat-toggle.on .ft-dot{background:var(--green);}
+
+/* ── LOCATION PICKER ── */
+.map-picker{
+  height:160px;border-radius:16px;overflow:hidden;
+  border:1px solid var(--border);position:relative;
+  background:linear-gradient(135deg,#0c1828,#111827);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  gap:8px;font-size:14px;color:var(--muted);
+  transition:all .2s;
+}
+.map-picker:hover{border-color:rgba(124,58,237,.35);}
+.map-picker.set{cursor:default;}
+.map-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+.map-roads{position:absolute;inset:0;}
+.mr{position:absolute;background:rgba(255,255,255,.07);}
+.mh{height:2px;width:100%;}
+.mv{width:2px;height:100%;}
+.mh1{top:38%}.mh2{top:66%}.mv1{left:30%}.mv2{left:62%}
+.map-pin-set{
+  position:absolute;top:38%;left:45%;
+  display:flex;flex-direction:column;align-items:center;
+  animation:bounce .8s ease-in-out infinite alternate;
+}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+.pin-bubble{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;-webkit-text-fill-color:#fff;
+  padding:4px 10px;border-radius:10px;font-size:11px;font-weight:700;
+  box-shadow:0 4px 16px rgba(124,58,237,.5);white-space:nowrap;
+}
+.pin-tri{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--primary);margin-top:-1px;}
+.map-pick-btn{
+  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  background:rgba(13,10,30,.85);backdrop-filter:blur(10px);
+  border:1px solid rgba(124,58,237,.3);border-radius:10px;
+  padding:6px 14px;font-size:11px;color:#C4B5FD;white-space:nowrap;
+}
+
+/* ── DUPLICATE CHECK RESULT ── */
+.dup-result{
+  margin-top:14px;border-radius:14px;padding:14px 16px;
+  display:flex;align-items:flex-start;gap:12px;
+  animation:fadeUp .3s ease;
+}
+.dup-clean {background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.22);}
+.dup-review{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.22);}
+.dup-bad   {background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.22);}
+.dup-icon{font-size:22px;flex-shrink:0;margin-top:1px;}
+.dup-title{font-size:13px;font-weight:700;margin-bottom:3px;}
+.dup-clean  .dup-title{color:#6EE7B7;}
+.dup-review .dup-title{color:var(--gold);}
+.dup-bad    .dup-title{color:var(--red);}
+.dup-sub{font-size:11px;color:var(--muted);}
+.dup-score-row{display:flex;gap:8px;margin-top:8px;}
+.dup-score-chip{
+  padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;
+  background:rgba(255,255,255,.06);
+}
+
+/* ── CHECKLIST SUMMARY ── */
+.checklist{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+.cl-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:12px;
+  background:var(--card);border:1px solid var(--border);
+  font-size:13px;
+}
+.cl-check{font-size:16px;flex-shrink:0;}
+.cl-label{flex:1;color:var(--muted);}
+.cl-value{font-size:12px;font-weight:700;color:var(--text);text-align:left;max-width:200px;truncate:true;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* ── PUBLISH BUTTON ── */
+.publish-btn{
+  width:100%;padding:16px;border-radius:18px;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  border:none;color:#fff;-webkit-text-fill-color:#fff;
+  font-family:'Cairo',sans-serif;font-size:17px;font-weight:900;
+  cursor:pointer;position:relative;overflow:hidden;
+  transition:opacity .2s,transform .15s;
+  box-shadow:0 8px 28px rgba(124,58,237,.45);
+}
+.publish-btn:hover{transform:translateY(-1px);box-shadow:0 12px 36px rgba(124,58,237,.55);}
+.publish-btn:active{transform:translateY(0);}
+.publish-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);
+  pointer-events:none;
+}
+.publish-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+/* ── NAV BUTTONS ── */
+.nav-btns{display:flex;gap:10px;margin-top:6px;}
+.btn-back{
+  flex:0 0 auto;padding:12px 22px;
+  border:1px solid var(--border);border-radius:13px;
+  background:transparent;color:var(--muted);
+  font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:all .2s;
+}
+.btn-back:hover{border-color:rgba(124,58,237,.3);color:var(--text);}
+.btn-next{
+  flex:1;padding:13px;border-radius:13px;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  border:none;color:#fff;-webkit-text-fill-color:#fff;
+  font-family:'Cairo',sans-serif;font-size:15px;font-weight:800;
+  cursor:pointer;transition:all .2s;
+  box-shadow:0 4px 18px rgba(124,58,237,.4);
+}
+.btn-next:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(124,58,237,.5);}
+
+/* ── SUCCESS SCREEN ── */
+.success-screen{
+  text-align:center;padding:60px 20px;
+  display:none;animation:fadeUp .4s ease;
+}
+.success-screen.show{display:block;}
+.success-ring{
+  width:90px;height:90px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--teal));
+  display:flex;align-items:center;justify-content:center;
+  font-size:40px;margin:0 auto 24px;
+  box-shadow:0 0 40px rgba(16,185,129,.4);
+  animation:pop .5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.success-ref{
+  display:inline-block;margin-top:8px;
+  padding:6px 16px;border-radius:20px;
+  background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);
+  font-family:monospace;font-size:16px;color:var(--green);font-weight:700;
+  letter-spacing:1px;
+}
+.success-actions{display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap;}
+.sa-btn{
+  padding:12px 26px;border-radius:13px;font-family:'Cairo',sans-serif;
+  font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;
+}
+.sa-primary{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  border:none;color:#fff;-webkit-text-fill-color:#fff;
+}
+.sa-ghost{background:transparent;border:1px solid var(--border);color:var(--muted);}
+.sa-ghost:hover{border-color:rgba(124,58,237,.35);color:var(--text);}
+
+/* ── MICRO-ANIMATIONS ── */
+.pulse-ring{
+  animation:pulseRing 2s cubic-bezier(.455,.03,.515,.955) infinite;
+}
+@keyframes pulseRing{
+  0%{box-shadow:0 0 0 0 rgba(16,185,129,.4)}
+  70%{box-shadow:0 0 0 14px rgba(16,185,129,0)}
+  100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}
+}
+
+/* ── VERIFICATION HINT ── */
+.ver-hint{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px;border-radius:12px;
+  background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);
+  font-size:12px;color:var(--muted);margin-top:14px;
+}
+.ver-hint strong{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-dot">🏠</div>
+    Aqario
+  </div>
+  <div class="nav-timer">
+    ⏱ الوقت المنقضي:
+    <span class="timer-num" id="timerNum">0</span>
+    ثانية
+  </div>
+  <button class="nav-save" onclick="saveDraft()">💾 حفظ مسودة</button>
+</nav>
+
+<!-- PAGE -->
+<div class="page" id="mainPage">
+
+  <!-- HEADER -->
+  <div class="page-head">
+    <div class="badge">⚡ نشر سريع</div>
+    <h1>انشر إعلانك في<br><span style="background:linear-gradient(135deg,#A78BFA,#67E8F9,#34D399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">أقل من 60 ثانية</span></h1>
+    <p>3 خطوات بسيطة — ظاهر على الخريطة فور الموافقة</p>
+  </div>
+
+  <!-- STEPS BAR -->
+  <div class="steps-bar" id="stepsBar">
+    <div class="step-item" onclick="goStep(0)">
+      <div class="step-circle active" id="sc0">1</div>
+      <div class="step-label active" id="sl0">النوع والعملية</div>
+    </div>
+    <div class="step-line" id="ln0"></div>
+    <div class="step-item" onclick="goStep(1)">
+      <div class="step-circle" id="sc1">2</div>
+      <div class="step-label" id="sl1">الصور والتفاصيل</div>
+    </div>
+    <div class="step-line" id="ln1"></div>
+    <div class="step-item" onclick="goStep(2)">
+      <div class="step-circle" id="sc2">3</div>
+      <div class="step-label" id="sl2">السعر والموقع</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 0: Type + Operation ═══════════ -->
+  <div class="panel active" id="panel0">
+
+    <!-- Type -->
+    <div class="scard">
+      <div class="scard-title"><span class="icon">🏷</span> نوع العقار <span class="scard-sub">* مطلوب</span></div>
+      <div class="type-grid" id="typeGrid">
+        <div class="type-btn" data-type="1" onclick="selectType(this)">
+          <div class="t-ico">🏢</div><div class="t-lbl">شقة</div>
+        </div>
+        <div class="type-btn" data-type="2" onclick="selectType(this)">
+          <div class="t-ico">🏡</div><div class="t-lbl">فيلا</div>
+        </div>
+        <div class="type-btn" data-type="3" onclick="selectType(this)">
+          <div class="t-ico">🌿</div><div class="t-lbl">أرض</div>
+        </div>
+        <div class="type-btn" data-type="4" onclick="selectType(this)">
+          <div class="t-ico">🏪</div><div class="t-lbl">محل تجاري</div>
+        </div>
+        <div class="type-btn" data-type="5" onclick="selectType(this)">
+          <div class="t-ico">📈</div><div class="t-lbl">استثماري</div>
+        </div>
+        <div class="type-btn" data-type="6" onclick="selectType(this)">
+          <div class="t-ico">🏠</div><div class="t-lbl">بيت</div>
+        </div>
+        <div class="type-btn" data-type="7" onclick="selectType(this)">
+          <div class="t-ico">🏛</div><div class="t-lbl">مكتب</div>
+        </div>
+        <div class="type-btn" data-type="8" onclick="selectType(this)">
+          <div class="t-ico">🏨</div><div class="t-lbl">سياحي</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Operation -->
+    <div class="scard">
+      <div class="scard-title"><span class="icon">🔑</span> نوع العملية</div>
+      <div class="op-toggle">
+        <button class="op-btn active" onclick="selectOp(this,'sale')">🏷 للبيع</button>
+        <button class="op-btn" onclick="selectOp(this,'rent')">🔑 للكراء</button>
+        <button class="op-btn" onclick="selectOp(this,'both')">🔄 الاثنان</button>
+      </div>
+    </div>
+
+    <!-- City -->
+    <div class="scard">
+      <div class="scard-title"><span class="icon">🏙</span> المدينة</div>
+      <div class="grid-2">
+        <div class="field">
+          <div class="field-label">المدينة <span class="req">*</span></div>
+          <select class="fselect" id="citySelect">
+            <option value="">اختر المدينة</option>
+            <option value="1">الدار البيضاء</option>
+            <option value="2">الرباط</option>
+            <option value="3">مراكش</option>
+            <option value="4">فاس</option>
+            <option value="5">طنجة</option>
+            <option value="6">أكادير</option>
+            <option value="7">مكناس</option>
+            <option value="8">وجدة</option>
+          </select>
+        </div>
+        <div class="field">
+          <div class="field-label">الحي / المنطقة <span class="req">*</span></div>
+          <input class="finput" id="neighborhood" placeholder="مثال: حي المعاريف">
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-next" onclick="nextStep(0)">التالي ← الصور والتفاصيل</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 1: Images + Details ═══════════ -->
+  <div class="panel" id="panel1">
+
+    <!-- Images -->
+    <div class="scard">
+      <div class="scard-title"><span class="icon">📸</span> صور العقار <span class="scard-sub">حتى 10 صور — الأولى ستكون الغلاف</span></div>
+
+      <div class="upload-zone" id="uploadZone"
+        ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)"
+        onclick="document.getElementById('fileInput').click()">
+        <input type="file" id="fileInput" multiple accept="image/*" onchange="handleFiles(event)">
+        <div class="uz-icon">📸</div>
+        <div class="uz-title">انقر أو اسحب الصور هنا</div>
+        <div class="uz-sub">JPG, PNG, WEBP — حجم أقصى 10MB لكل صورة</div>
+      </div>
+
+      <div class="img-grid" id="imgGrid"></div>
+
+      <div class="ver-hint" style="margin-top:12px;">
+        <span style="font-size:18px">🤖</span>
+        <div>صورك محمية بـ <strong>خوارزمية pHash</strong> — نكشف تلقائياً إذا أحد حاول تكرار إعلانك</div>
+      </div>
+    </div>
+
+    <!-- Title + Description -->
+    <div class="scard">
+      <div class="scard-title"><span class="icon">📝</span> العنوان والوصف</div>
+
+      <div class="field">
+        <div class="field-label">
+          عنوان الإعلان <span class="req">*</span>
+          <span class="count" id="titleCount">0/80</span>
+        </div>
+        <input class="finput" id="titleInput" maxlength="80"
+          placeholder="مثال: شقة فاخرة 3 غرف في حي المعاريف — الطابق 5 — بالمصعد"
+          oninput="updateCount('titleInput','titleCount',80)">
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          الوصف التفصيلي
+          <span class="count" id="descCount">0/1000</span>
+        </div>
+        <textarea class="ftextarea" id="descInput" maxlength="1000"
+          placeholder="صف العقار بتفصيل: المميزات، القرب من المرافق، التوجه، حالة العقار..."
+          oninput="updateCount('descInput','descCount',1000)"></textarea>
+      </div>
+    </div>
+
+    <!-- Specs -->
+    <div class="scard">
+      <div class="scard-title"><span class="icon">📐</span> المواصفات</div>
+      <div class="grid-3" style="margin-bottom:12px;">
+        <div class="field">
+          <div class="field-label">المساحة (م²)</div>
+          <input class="finput" id="area" type="number" placeholder="120">
+        </div>
+        <div class="field">
+          <div class="field-label">غرف النوم</div>
+          <input class="finput" id="bedrooms" type="number" placeholder="3" min="0" max="20">
+        </div>
+        <div class="field">
+          <div class="field-label">الحمامات</div>
+          <input class="finput" id="bathrooms" type="number" placeholder="2" min="0">
+        </div>
+        <div class="field">
+          <div class="field-label">الطابق</div>
+          <input class="finput" id="floor" type="number" placeholder="5" min="0">
+        </div>
+        <div class="field">
+          <div class="field-label">مجموع الطوابق</div>
+          <input class="finput" id="floors" type="number" placeholder="8" min="1">
+        </div>
+        <div class="field">
+          <div class="field-label">سنة البناء</div>
+          <input class="finput" id="yearBuilt" type="number" placeholder="2018">
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="scard">
+      <div class="scard-title"><span class="icon">✨</span> المميزات والخدمات</div>
+      <div class="feat-grid" id="featGrid">
+        <div class="feat-toggle" onclick="toggleFeat(this,'elevator')">🛗 مصعد <div class="ft-dot"></div></div>
+        <div class="feat-toggle" onclick="toggleFeat(this,'pool')">🏊 مسبح <div class="ft-dot"></div></div>
+        <div class="feat-toggle" onclick="toggleFeat(this,'garden')">🌿 حديقة <div class="ft-dot"></div></div>
+        <div class="feat-toggle" onclick="toggleFeat(this,'terrace')">🏙 تراس <div class="ft-dot"></div></div>
+        <div class="feat-toggle" onclick="toggleFeat(this,'balcony')">🪟 شرفة <div class="ft-dot"></div></div>
+        <div class="feat-toggle" onclick="toggleFeat(this,'ac')">❄️ تكييف <div class="ft-dot"></div></div>
+        <div class="feat-toggle" onclick="toggleFeat(this,'security')">🔒 حراسة 24/7 <div class="ft-dot"></div></div>
+        <div class="feat-toggle" onclick="toggleFeat(this,'fiber')">🌐 فيبر <div class="ft-dot"></div></div>
+        <div class="feat-toggle" onclick="toggleFeat(this,'furnished')">🛋 مفروش <div class="ft-dot"></div></div>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-back" onclick="prevStep(1)">← رجوع</button>
+      <button class="btn-next" onclick="nextStep(1)">التالي ← السعر والموقع</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 2: Price + Location ═══════════ -->
+  <div class="panel" id="panel2">
+
+    <!-- Price -->
+    <div class="scard">
+      <div class="scard-title"><span class="icon">💰</span> السعر</div>
+
+      <div class="op-toggle" style="margin-bottom:14px;">
+        <button class="op-btn active" id="priceTypeSale" onclick="setPriceType('sale',this)">سعر البيع</button>
+        <button class="op-btn" id="priceTypeRent" onclick="setPriceType('rent',this)">إيجار شهري</button>
+      </div>
+
+      <div class="field">
+        <div class="field-label">السعر <span class="req">*</span></div>
+        <div class="price-wrap">
+          <span class="price-currency">MAD</span>
+          <input class="finput" id="priceInput" type="number"
+            placeholder="1 450 000"
+            oninput="onPriceInput()">
+        </div>
+      </div>
+
+      <!-- AI estimate bar -->
+      <div class="estimate-bar" id="estimateBar" style="display:none;">
+        <div class="est-icon">🤖</div>
+        <div style="flex:1">
+          <div class="est-text">تقدير السعر العادل: <strong id="estVal">—</strong></div>
+          <div class="est-range">
+            <span class="est-min" id="estMin">—</span>
+            <div class="est-track">
+              <div class="est-fill" id="estFill"></div>
+              <div class="est-pin" id="estPin"></div>
+            </div>
+            <span class="est-max" id="estMax">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price toggles -->
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <div class="feat-toggle" onclick="toggleFeat(this,'negotiable')" style="flex:1">
+          💬 السعر قابل للتفاوض <div class="ft-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="scard">
+      <div class="scard-title"><span class="icon">📍</span> الموقع الجغرافي</div>
+      <div class="field">
+        <div class="field-label">العنوان الكامل</div>
+        <input class="finput" id="addressInput" placeholder="مثال: شارع الأمير الوليد، الدار البيضاء">
+      </div>
+
+      <div class="map-picker" id="mapPicker" onclick="pickLocation()">
+        <div class="map-grid-bg"></div>
+        <div class="map-roads">
+          <div class="mr mh mh1"></div>
+          <div class="mr mh mh2"></div>
+          <div class="mr mv mv1"></div>
+          <div class="mr mv mv2"></div>
+        </div>
+        <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;" id="mapPlaceholder">
+          <span style="font-size:24px">📍</span>
+          <span>انقر لتحديد الموقع على الخريطة</span>
+          <span style="font-size:11px;">(يساعد على ظهور إعلانك في البحث بالخريطة)</span>
+        </div>
+        <div class="map-pin-set" id="mapPinSet" style="display:none;">
+          <div class="pin-bubble" id="pinLabel">الدار البيضاء</div>
+          <div class="pin-tri"></div>
+        </div>
+        <div class="map-pick-btn" id="mapPickBtn">🗺 تعديل الموقع</div>
+      </div>
+    </div>
+
+    <!-- Contact preference -->
+    <div class="scard">
+      <div class="scard-title"><span class="icon">📞</span> طريقة التواصل المفضلة</div>
+      <div class="feat-grid">
+        <div class="feat-toggle on" onclick="toggleFeat(this,'call')">📞 مكالمة <div class="ft-dot" style="background:var(--green)"></div></div>
+        <div class="feat-toggle on" onclick="toggleFeat(this,'whatsapp')">💬 واتساب <div class="ft-dot" style="background:var(--green)"></div></div>
+        <div class="feat-toggle" onclick="toggleFeat(this,'message')">✉️ رسالة داخلية <div class="ft-dot"></div></div>
+      </div>
+    </div>
+
+    <!-- Duplicate check result -->
+    <div id="dupResultBox"></div>
+
+    <!-- Summary checklist (final review) -->
+    <div class="scard" id="summaryCard" style="display:none;">
+      <div class="scard-title"><span class="icon">✅</span> مراجعة سريعة قبل النشر</div>
+      <div class="checklist" id="checklistItems"></div>
+      <button class="publish-btn" onclick="publish()" id="publishBtn">
+        🚀 &nbsp; نشر الإعلان الآن
+      </button>
+      <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--muted);">
+        سيظهر الإعلان خلال دقائق بعد المراجعة السريعة ✓
+      </div>
+    </div>
+
+    <div class="nav-btns" id="step2NavBtns">
+      <button class="btn-back" onclick="prevStep(2)">← رجوع</button>
+      <button class="btn-next" onclick="runDuplicateCheck()">فحص التكرار ومراجعة ✓</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- SUCCESS SCREEN -->
+<div class="success-screen" id="successScreen">
+  <div class="success-ring pulse-ring">✓</div>
+  <h2 style="font-family:'Tajawal',sans-serif;font-size:28px;font-weight:900;margin-bottom:10px;">
+    إعلانك قيد المراجعة! 🎉
+  </h2>
+  <p style="color:var(--muted);font-size:15px;margin-bottom:8px;">
+    سيظهر على الخريطة خلال أقل من 30 دقيقة
+  </p>
+  <div class="success-ref" id="refCode">AQ-2026-00041</div>
+  <div style="margin-top:24px;font-size:13px;color:var(--muted);">
+    ⏱ نشرت في <strong style="color:var(--green)" id="finalTime">—</strong> ثانية
+  </div>
+  <div class="success-actions">
+    <button class="sa-btn sa-primary" onclick="location.href='/'">🗺 عرض على الخريطة</button>
+    <button class="sa-btn sa-ghost" onclick="location.href='/dashboard'">📊 لوحة التحكم</button>
+    <button class="sa-btn sa-ghost" onclick="resetForm()">➕ إعلان جديد</button>
+  </div>
+</div>
+
+<script>
+// ── State ─────────────────────────────────────────────────────
+const state = {
+  step: 0,
+  type: null,
+  operation: 'sale',
+  city: '',
+  neighborhood: '',
+  images: [],
+  features: {},
+  priceType: 'sale',
+  locationSet: false,
+  startTime: Date.now(),
+}
+
+// ── Timer ─────────────────────────────────────────────────────
+const timerEl = document.getElementById('timerNum')
+setInterval(() => {
+  const sec = Math.floor((Date.now() - state.startTime) / 1000)
+  timerEl.textContent = sec
+  timerEl.className = 'timer-num' + (sec > 90 ? ' danger' : sec > 60 ? ' warn' : '')
+}, 1000)
+
+// ── Step navigation ───────────────────────────────────────────
+function updateStepsUI(active) {
+  for (let i = 0; i < 3; i++) {
+    const sc = document.getElementById('sc'+i)
+    const sl = document.getElementById('sl'+i)
+    const ln = document.getElementById('ln'+i)
+    sc.className = 'step-circle' + (i < active ? ' done' : i === active ? ' active' : '')
+    sc.textContent = i < active ? '✓' : i+1
+    sl.className = 'step-label' + (i < active ? ' done' : i === active ? ' active' : '')
+    if (ln) ln.className = 'step-line' + (i < active ? ' done' : '')
+  }
+}
+
+function showPanel(n) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'))
+  document.getElementById('panel'+n).classList.add('active')
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+function goStep(n) {
+  if (n > state.step) return
+  state.step = n
+  showPanel(n)
+  updateStepsUI(n)
+}
+
+function nextStep(from) {
+  if (!validateStep(from)) return
+  state.step = from + 1
+  showPanel(state.step)
+  updateStepsUI(state.step)
+}
+
+function prevStep(from) {
+  state.step = from - 1
+  showPanel(state.step)
+  updateStepsUI(state.step)
+}
+
+// ── Validation ────────────────────────────────────────────────
+function validateStep(step) {
+  if (step === 0) {
+    if (!state.type)  { shake('typeGrid');   return false }
+    if (!document.getElementById('citySelect').value) { shake('citySelect'); return false }
+    if (!document.getElementById('neighborhood').value.trim()) { shake('neighborhood'); return false }
+    return true
+  }
+  if (step === 1) {
+    if (!document.getElementById('titleInput').value.trim()) { shake('titleInput'); return false }
+    return true
+  }
+  if (step === 2) {
+    if (!document.getElementById('priceInput').value) { shake('priceInput'); return false }
+    return true
+  }
+  return true
+}
+
+function shake(id) {
+  const el = document.getElementById(id)
+  if (!el) return
+  el.style.animation = 'none'
+  el.style.borderColor = 'rgba(239,68,68,.6)'
+  el.style.boxShadow   = '0 0 0 3px rgba(239,68,68,.15)'
+  setTimeout(() => {
+    el.style.borderColor = ''
+    el.style.boxShadow   = ''
+  }, 1500)
+}
+
+// ── Type selection ────────────────────────────────────────────
+function selectType(el) {
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('sel'))
+  el.classList.add('sel')
+  state.type = el.dataset.type
+}
+
+// ── Operation ─────────────────────────────────────────────────
+function selectOp(el, op) {
+  document.querySelectorAll('.op-btn').forEach(b => b.classList.remove('active'))
+  el.classList.add('active')
+  state.operation = op
+}
+
+// ── Feature toggles ───────────────────────────────────────────
+function toggleFeat(el, key) {
+  el.classList.toggle('on')
+  state.features[key] = el.classList.contains('on')
+}
+
+// ── Price type ────────────────────────────────────────────────
+function setPriceType(type, el) {
+  document.querySelectorAll('.op-btn').forEach(b => b.classList.remove('active'))
+  el.classList.add('active')
+  state.priceType = type
+}
+
+// ── AI Price estimate (simulated) ─────────────────────────────
+let estimateTimeout
+function onPriceInput() {
+  clearTimeout(estimateTimeout)
+  estimateTimeout = setTimeout(showEstimate, 700)
+}
+
+function showEstimate() {
+  const price = parseFloat(document.getElementById('priceInput').value)
+  if (!price || price < 10000) { document.getElementById('estimateBar').style.display = 'none'; return }
+
+  const spread = 0.2
+  const min = Math.round(price * (1 - spread / 2) / 1000) * 1000
+  const max = Math.round(price * (1 + spread / 2) / 1000) * 1000
+  const avg = (min + max) / 2
+
+  const bar = document.getElementById('estimateBar')
+  bar.style.display = 'flex'
+
+  document.getElementById('estMin').textContent = fmt(min) + ' MAD'
+  document.getElementById('estMax').textContent = fmt(max) + ' MAD'
+  document.getElementById('estVal').textContent = fmt(avg) + ' MAD'
+
+  const pct = Math.max(0, Math.min(100, ((price - min) / (max - min)) * 100))
+  document.getElementById('estFill').style.width = pct + '%'
+  document.getElementById('estFill').style.right  = 'auto'
+  document.getElementById('estPin').style.left    = 'calc(' + pct + '% - 6px)'
+}
+
+function fmt(n) {
+  return new Intl.NumberFormat('ar-MA').format(n)
+}
+
+// ── Character count ───────────────────────────────────────────
+function updateCount(inputId, countId, max) {
+  const len = document.getElementById(inputId).value.length
+  document.getElementById(countId).textContent = len + '/' + max
+}
+
+// ── Image upload ──────────────────────────────────────────────
+const MOCK_IMGS = [
+  { emoji:'🏢', color:'linear-gradient(135deg,#1a0d3d,#2d1b69)' },
+  { emoji:'🪟', color:'linear-gradient(135deg,#0a1f35,#162f4f)' },
+  { emoji:'🛋', color:'linear-gradient(135deg,#1a1a0a,#2f2a15)' },
+  { emoji:'🚿', color:'linear-gradient(135deg,#0d1f1a,#103028)' },
+  { emoji:'🍳', color:'linear-gradient(135deg,#1a100a,#321f10)' },
+]
+
+function handleFiles(e) { addImages(e.target.files) }
+function handleDrop(e) {
+  e.preventDefault()
+  document.getElementById('uploadZone').classList.remove('drag')
+  addImages(e.dataTransfer.files)
+}
+function handleDragOver(e) {
+  e.preventDefault()
+  document.getElementById('uploadZone').classList.add('drag')
+}
+function handleDragLeave() {
+  document.getElementById('uploadZone').classList.remove('drag')
+}
+
+function addImages(files) {
+  const arr = Array.from(files).slice(0, 10 - state.images.length)
+  arr.forEach(f => state.images.push({ name: f.name, file: f }))
+  renderImages()
+}
+
+function removeImage(i) {
+  state.images.splice(i, 1)
+  renderImages()
+}
+
+function renderImages() {
+  const grid = document.getElementById('imgGrid')
+  grid.innerHTML = ''
+  state.images.forEach((img, i) => {
+    const m = MOCK_IMGS[i % MOCK_IMGS.length]
+    const thumb = document.createElement('div')
+    thumb.className = 'img-thumb' + (i === 0 ? ' cover' : '')
+    thumb.style.background = m.color
+    thumb.innerHTML = `
+      <span style="font-size:32px">${m.emoji}</span>
+      <div class="rm-btn" onclick="removeImage(${i})">✕</div>
+      ${i===0 ? '<div class="cover-badge">غلاف</div>' : ''}
+    `
+    grid.appendChild(thumb)
+  })
+  if (state.images.length < 10) {
+    const add = document.createElement('div')
+    add.className = 'add-more'
+    add.textContent = '＋'
+    add.onclick = () => document.getElementById('fileInput').click()
+    grid.appendChild(add)
+  }
+}
+
+// ── Location picker (simulated) ───────────────────────────────
+function pickLocation() {
+  state.locationSet = true
+  document.getElementById('mapPlaceholder').style.display = 'none'
+  document.getElementById('mapPinSet').style.display = 'flex'
+  const city = document.getElementById('citySelect')
+  const lbl  = city.options[city.selectedIndex]?.text || 'الدار البيضاء'
+  document.getElementById('pinLabel').textContent = lbl
+}
+
+// ── Duplicate check (simulated) ───────────────────────────────
+function runDuplicateCheck() {
+  if (!validateStep(2)) return
+
+  const btn = document.querySelector('#step2NavBtns .btn-next')
+  btn.textContent = '🔍 جاري الفحص...'
+  btn.disabled = true
+
+  setTimeout(() => {
+    btn.textContent = 'فحص التكرار ومراجعة ✓'
+    btn.disabled = false
+    showDupResult()
+    showSummary()
+    document.getElementById('step2NavBtns').style.display = 'none'
+  }, 1800)
+}
+
+function showDupResult() {
+  const box = document.getElementById('dupResultBox')
+  // Simulate clean result
+  const score = Math.floor(Math.random() * 30) + 5
+  box.innerHTML = `
+    <div class="dup-result dup-clean">
+      <div class="dup-icon">✅</div>
+      <div>
+        <div class="dup-title">إعلانك فريد وجاهز للنشر</div>
+        <div class="dup-sub">لم نجد أي إعلانات مشابهة في قاعدة بياناتنا</div>
+        <div class="dup-score-row">
+          <span class="dup-score-chip">📸 الصور: ${Math.floor(Math.random()*15)}%</span>
+          <span class="dup-score-chip">📍 الموقع: ${Math.floor(Math.random()*10)}%</span>
+          <span class="dup-score-chip">💬 النص: ${Math.floor(Math.random()*20)}%</span>
+          <span class="dup-score-chip" style="color:var(--green);font-weight:800">المجموع: ${score}/100 ✓</span>
+        </div>
+      </div>
+    </div>
+  `
+}
+
+function showSummary() {
+  const price = document.getElementById('priceInput').value
+  const title = document.getElementById('titleInput').value
+  const city  = document.getElementById('citySelect')
+  const cityName = city.options[city.selectedIndex]?.text || '—'
+  const area  = document.getElementById('area').value
+  const beds  = document.getElementById('bedrooms').value
+  const typeNames = {1:'شقة',2:'فيلا',3:'أرض',4:'محل تجاري',5:'استثماري',6:'بيت',7:'مكتب',8:'سياحي'}
+
+  const checks = [
+    { icon:'🏷', label:'نوع العقار',   val: typeNames[state.type] || '—' },
+    { icon:'🔑', label:'العملية',       val: state.operation==='sale'?'للبيع':state.operation==='rent'?'للكراء':'بيع وكراء' },
+    { icon:'🏙', label:'المدينة',       val: cityName },
+    { icon:'📝', label:'العنوان',       val: title || '—' },
+    { icon:'📐', label:'المساحة',       val: area ? area+' م²' : '—' },
+    { icon:'🛏', label:'الغرف',         val: beds ? beds+' غرف' : '—' },
+    { icon:'📸', label:'الصور',         val: state.images.length + ' صورة' },
+    { icon:'💰', label:'السعر',         val: price ? fmt(parseFloat(price))+' MAD' : '—' },
+    { icon:'📍', label:'الموقع',        val: state.locationSet ? '✓ محدد' : 'غير محدد' },
+  ]
+
+  document.getElementById('checklistItems').innerHTML = checks.map(c => `
+    <div class="cl-item">
+      <span class="cl-check">${c.icon}</span>
+      <span class="cl-label">${c.label}</span>
+      <span class="cl-value">${c.val}</span>
+    </div>
+  `).join('')
+
+  document.getElementById('summaryCard').style.display = 'block'
+  document.getElementById('summaryCard').scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+// ── Publish ───────────────────────────────────────────────────
+function publish() {
+  const btn = document.getElementById('publishBtn')
+  btn.disabled = true
+  btn.textContent = '⏳ جاري الرفع...'
+
+  setTimeout(() => {
+    const elapsed = Math.floor((Date.now() - state.startTime) / 1000)
+    document.getElementById('mainPage').style.display = 'none'
+    document.getElementById('finalTime').textContent = elapsed
+    const ref = 'AQ-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*99999)).padStart(5,'0')
+    document.getElementById('refCode').textContent = ref
+    document.getElementById('successScreen').classList.add('show')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, 1400)
+}
+
+// ── Draft save ────────────────────────────────────────────────
+function saveDraft() {
+  const btn = document.querySelector('.nav-save')
+  btn.textContent = '✓ محفوظ'
+  btn.style.color = 'var(--green)'
+  btn.style.borderColor = 'rgba(16,185,129,.3)'
+  setTimeout(() => {
+    btn.textContent = '💾 حفظ مسودة'
+    btn.style.color = ''
+    btn.style.borderColor = ''
+  }, 2000)
+}
+
+// ── Reset ─────────────────────────────────────────────────────
+function resetForm() {
+  document.getElementById('successScreen').classList.remove('show')
+  document.getElementById('mainPage').style.display = 'block'
+  state.step = 0; state.images = []; state.type = null; state.features = {}
+  state.startTime = Date.now()
+  showPanel(0); updateStepsUI(0)
+  document.getElementById('dupResultBox').innerHTML = ''
+  document.getElementById('summaryCard').style.display = 'none'
+  document.getElementById('step2NavBtns').style.display = ''
+  document.getElementById('imgGrid').innerHTML = ''
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('sel'))
+  document.querySelectorAll('.feat-toggle').forEach(b => b.classList.remove('on'))
+  document.querySelectorAll('input,textarea').forEach(i => i.value = '')
+}
+</script>
+</body>
+</html>

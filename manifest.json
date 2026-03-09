@@ -9,20 +9,13 @@
   "lang": "ar",
   "dir": "rtl",
   "orientation": "portrait-primary",
-
   "icons": [
-    {
-      "src": "images/aqario-icon.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "images/aqario-icon.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "images/icon-72.png",  "sizes": "72x72",   "type": "image/png" },
+    { "src": "images/icon-96.png",  "sizes": "96x96",   "type": "image/png" },
+    { "src": "images/icon-128.png", "sizes": "128x128", "type": "image/png" },
+    { "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ],
-
   "screenshots": [
     { "src": "images/screenshot-1.png", "sizes": "390x844", "type": "image/png" },
     { "src": "images/screenshot-2.png", "sizes": "390x844", "type": "image/png" }

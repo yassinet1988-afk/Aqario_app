@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aqario – طريقك للعقار الصحيح</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #5B21B6;
+    --primary-light: #7C3AED;
+    --accent: #4F46E5;
+    --accent2: #06B6D4;
+    --gold: #F59E0B;
+    --bg: #0A0612;
+    --bg2: #0F0A1E;
+    --card: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.08);
+    --text: #F1F0F5;
+    --text-muted: #9CA3C8;
+    --radius: 18px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(91,33,182,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(79,70,229,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 30% at 50% 50%, rgba(6,182,212,0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: rgba(10,6,18,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #A78BFA, #60A5FA, #34D399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo-icon {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent2));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    -webkit-text-fill-color: white;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn-ghost {
+    padding: 8px 20px;
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: #7C3AED; color: #A78BFA; }
+
+  .btn-primary {
+    padding: 9px 22px;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 80px 40px 60px;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 50px;
+    font-size: 13px;
+    color: #C4B5FD;
+    margin-bottom: 28px;
+  }
+  .badge span { width: 6px; height: 6px; background: #7C3AED; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .hero h1 {
+    font-family: 'Tajawal', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 .gradient-text {
+    background: linear-gradient(135deg, #A78BFA 0%, #60A5FA 50%, #34D399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+
+  /* SEARCH BOX */
+  .search-container {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto 20px;
+    padding: 0 40px;
+  }
+
+  .search-box {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .search-tabs {
+    display: flex;
+    gap: 4px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    padding: 4px;
+  }
+
+  .tab {
+    padding: 8px 16px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-muted);
+    border: none;
+    background: transparent;
+    font-family: 'Cairo', sans-serif;
+  }
+  .tab.active {
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    color: white;
+  }
+
+  .search-fields {
+    flex: 1;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .search-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 10px 16px;
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: rgba(124,58,237,0.5); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  .search-select {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+  }
+  .search-select option { background: #1a1030; }
+
+  .btn-search {
+    padding: 10px 28px;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stats-row {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px 40px 50px;
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #A78BFA, #60A5FA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  /* MAP + LISTINGS SECTION */
+  .main-section {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 24px;
+    padding: 0 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* MAP */
+  .map-wrapper {
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    position: relative;
+    min-height: 500px;
+    background: #0d1b2a;
+  }
+
+  .map-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    position: relative;
+    background: 
+      radial-gradient(circle at 40% 50%, rgba(91,33,182,0.15) 0%, transparent 50%),
+      linear-gradient(180deg, #0d1b2a 0%, #111827 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Fake map grid */
+  .map-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Fake roads */
+  .map-road {
+    position: absolute;
+    background: rgba(255,255,255,0.07);
+  }
+  .map-road.h1 { height: 3px; width: 80%; top: 35%; right: 10%; }
+  .map-road.h2 { height: 2px; width: 60%; top: 60%; right: 20%; }
+  .map-road.h3 { height: 2px; width: 70%; top: 75%; right: 5%; }
+  .map-road.v1 { width: 3px; height: 70%; top: 10%; right: 30%; }
+  .map-road.v2 { width: 2px; height: 50%; top: 25%; right: 60%; }
+
+  /* Map pin */
+  .map-pin {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  .pin-bubble {
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(91,33,182,0.5);
+    font-family: 'Cairo', sans-serif;
+  }
+  .pin-bubble.gold {
+    background: linear-gradient(135deg, #F59E0B, #EF4444);
+    box-shadow: 0 4px 20px rgba(245,158,11,0.5);
+  }
+  .pin-bubble.cyan {
+    background: linear-gradient(135deg, #06B6D4, #3B82F6);
+    box-shadow: 0 4px 20px rgba(6,182,212,0.5);
+  }
+
+  .pin-arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid var(--primary-light);
+    margin-top: -1px;
+  }
+
+  .pin1 { top: 30%; right: 25%; animation-delay: 0s; }
+  .pin2 { top: 45%; right: 55%; animation-delay: 0.5s; }
+  .pin3 { top: 62%; right: 35%; animation-delay: 1s; }
+  .pin4 { top: 20%; right: 45%; animation-delay: 1.5s; }
+  .pin5 { top: 70%; right: 65%; animation-delay: 0.3s; }
+
+  .map-overlay-top {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .map-badge {
+    background: rgba(10,6,18,0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .map-badge strong { color: var(--text); }
+
+  .map-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .map-btn {
+    width: 32px;
+    height: 32px;
+    background: rgba(10,6,18,0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* LISTINGS PANEL */
+  .listings-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    max-height: 560px;
+    padding-left: 4px;
+  }
+
+  .listings-panel::-webkit-scrollbar { width: 4px; }
+  .listings-panel::-webkit-scrollbar-track { background: transparent; }
+  .listings-panel::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 4px; }
+
+  .listings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  .listings-header h3 { font-size: 16px; font-weight: 700; }
+  .listings-header span { font-size: 13px; color: var(--text-muted); }
+
+  .property-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.25s;
+    cursor: pointer;
+    display: flex;
+    gap: 0;
+  }
+  .property-card:hover {
+    border-color: rgba(124,58,237,0.4);
+    background: rgba(255,255,255,0.06);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(91,33,182,0.15);
+  }
+
+  .card-img {
+    width: 110px;
+    min-height: 110px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-img-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+  }
+  .img-apt { background: linear-gradient(135deg, #1e1040, #2d1b69); }
+  .img-villa { background: linear-gradient(135deg, #0d2137, #1a3a5c); }
+  .img-land { background: linear-gradient(135deg, #132010, #1e3a18); }
+  .img-shop { background: linear-gradient(135deg, #2a1200, #4a2000); }
+
+  .card-tag {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+  }
+  .tag-sell { background: rgba(124,58,237,0.9); color: white; }
+  .tag-rent { background: rgba(6,182,212,0.9); color: white; }
+
+  .card-body {
+    padding: 12px 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-location {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .card-specs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .spec {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .price {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #A78BFA, #60A5FA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .card-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .icon-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .icon-btn:hover { border-color: var(--primary-light); color: #A78BFA; }
+
+  /* FEATURES SECTION */
+  .features {
+    position: relative;
+    z-index: 1;
+    padding: 60px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 48px;
+    font-size: 16px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 28px 22px;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(124,58,237,0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .feature-card:hover::before { opacity: 1; }
+  .feature-card:hover {
+    border-color: rgba(124,58,237,0.3);
+    transform: translateY(-4px);
+  }
+
+  .feature-icon {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(79,70,229,0.2));
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 16px;
+  }
+
+  .feature-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .feature-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* CATEGORIES */
+  .categories {
+    position: relative;
+    z-index: 1;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .cats-grid {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .cats-grid::-webkit-scrollbar { display: none; }
+
+  .cat-card {
+    flex-shrink: 0;
+    width: 160px;
+    height: 100px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid var(--card-border);
+    cursor: pointer;
+    transition: all 0.25s;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .cat-card:hover { transform: translateY(-3px); border-color: rgba(124,58,237,0.4); }
+  .cat-1 { background: linear-gradient(135deg, rgba(91,33,182,0.2), rgba(91,33,182,0.05)); }
+  .cat-2 { background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(6,182,212,0.05)); }
+  .cat-3 { background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05)); }
+  .cat-4 { background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(245,158,11,0.05)); }
+  .cat-5 { background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.05)); }
+  .cat-icon { font-size: 28px; }
+
+  /* Footer CTA */
+  .cta-section {
+    position: relative;
+    z-index: 1;
+    margin: 40px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, rgba(91,33,182,0.3) 0%, rgba(79,70,229,0.2) 100%);
+    border: 1px solid rgba(124,58,237,0.3);
+    padding: 60px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-section h2 {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .cta-section p {
+    color: var(--text-muted);
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+  .cta-btns { display: flex; gap: 14px; justify-content: center; }
+
+  .btn-large {
+    padding: 14px 36px;
+    border-radius: 14px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-large.primary {
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    border: none;
+    color: white;
+  }
+  .btn-large.primary:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn-large.outline {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text);
+  }
+  .btn-large.outline:hover { border-color: rgba(124,58,237,0.5); }
+
+  /* Trusted badge */
+  .trust-badges {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 30px 40px;
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--card-border);
+    margin-top: 20px;
+  }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .trust-item span { color: #34D399; }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="logo">
+    <div class="logo-icon">🏠</div>
+    Aqario
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="#">الرئيسية</a></li>
+    <li><a href="#">للبيع</a></li>
+    <li><a href="#">للكراء</a></li>
+    <li><a href="#">الوكالات</a></li>
+    <li><a href="#">تقدير السعر</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <button class="btn-ghost">تسجيل الدخول</button>
+    <button class="btn-primary">+ نشر إعلان</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">
+    <span></span>
+    أول منصة عقارية مغربية ذكية
+  </div>
+  <h1>
+    ابحث عن<br>
+    <span class="gradient-text">عقارك المثالي</span><br>
+    بكل ثقة وأمان
+  </h1>
+  <p>
+    منصة عقارية ذكية بخريطة تفاعلية، توثيق الملاك، وتقدير السعر العادل.
+    الثقة والجودة قبل الكثرة.
+  </p>
+</section>
+
+<!-- SEARCH BOX -->
+<div class="search-container">
+  <div class="search-box">
+    <div class="search-tabs">
+      <button class="tab active">بيع</button>
+      <button class="tab">كراء</button>
+      <button class="tab">استثمار</button>
+    </div>
+    <div class="search-fields">
+      <input class="search-input" type="text" placeholder="🔍  المدينة أو الحي...">
+      <select class="search-select">
+        <option>نوع العقار</option>
+        <option>شقة</option>
+        <option>فيلا</option>
+        <option>أرض</option>
+        <option>محل تجاري</option>
+      </select>
+      <select class="search-select">
+        <option>السعر (MAD)</option>
+        <option>أقل من 500,000</option>
+        <option>500k – 1M</option>
+        <option>1M – 3M</option>
+        <option>+3M</option>
+      </select>
+    </div>
+    <button class="btn-search">🔍 بحث</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat">
+    <div class="stat-num">+12,400</div>
+    <div class="stat-label">عقار نشط</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">47</div>
+    <div class="stat-label">مدينة مغربية</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">+3,200</div>
+    <div class="stat-label">مستخدم موثّق</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">98%</div>
+    <div class="stat-label">رضا العملاء</div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="categories">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <h3 style="font-family:'Tajawal',sans-serif; font-size:20px; font-weight:700;">تصفح حسب النوع</h3>
+    <a href="#" style="color:#A78BFA; font-size:13px; text-decoration:none;">عرض الكل ←</a>
+  </div>
+  <div class="cats-grid">
+    <div class="cat-card cat-1">
+      <span class="cat-icon">🏢</span>
+      شقق
+    </div>
+    <div class="cat-card cat-2">
+      <span class="cat-icon">🏡</span>
+      فيلات
+    </div>
+    <div class="cat-card cat-3">
+      <span class="cat-icon">🌿</span>
+      أراضي
+    </div>
+    <div class="cat-card cat-4">
+      <span class="cat-icon">🏪</span>
+      محلات
+    </div>
+    <div class="cat-card cat-5">
+      <span class="cat-icon">📈</span>
+      استثمار
+    </div>
+  </div>
+</div>
+
+<!-- MAP + LISTINGS -->
+<div class="main-section">
+
+  <!-- MAP -->
+  <div class="map-wrapper">
+    <div class="map-placeholder">
+      <div class="map-grid"></div>
+
+      <!-- Fake roads -->
+      <div class="map-road h1"></div>
+      <div class="map-road h2"></div>
+      <div class="map-road h3"></div>
+      <div class="map-road v1"></div>
+      <div class="map-road v2"></div>
+
+      <!-- Map pins -->
+      <div class="map-pin pin1">
+        <div class="pin-bubble">1,450,000 MAD</div>
+        <div class="pin-arrow"></div>
+      </div>
+      <div class="map-pin pin2">
+        <div class="pin-bubble gold">3,200,000 MAD</div>
+        <div class="pin-arrow" style="border-top-color:#F59E0B;"></div>
+      </div>
+      <div class="map-pin pin3">
+        <div class="pin-bubble cyan">6,500 MAD/شهر</div>
+        <div class="pin-arrow" style="border-top-color:#06B6D4;"></div>
+      </div>
+      <div class="map-pin pin4">
+        <div class="pin-bubble">850,000 MAD</div>
+        <div class="pin-arrow"></div>
+      </div>
+      <div class="map-pin pin5">
+        <div class="pin-bubble gold">12,000 MAD/شهر</div>
+        <div class="pin-arrow" style="border-top-color:#F59E0B;"></div>
+      </div>
+
+      <!-- Map overlay -->
+      <div class="map-overlay-top">
+        <div class="map-badge">📍 <strong>الدار البيضاء</strong> – 2,340 عقار</div>
+        <div class="map-controls">
+          <button class="map-btn">+</button>
+          <button class="map-btn">−</button>
+          <button class="map-btn">⊙</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LISTINGS PANEL -->
+  <div style="display:flex; flex-direction:column; gap:14px; overflow:hidden;">
+    <div class="listings-header">
+      <h3>أحدث العقارات</h3>
+      <span>عرض 1–8 من 2,340</span>
+    </div>
+
+    <div class="listings-panel">
+
+      <!-- Card 1 -->
+      <div class="property-card">
+        <div class="card-img">
+          <div class="card-img-inner img-apt">🏢</div>
+          <span class="card-tag tag-sell">بيع</span>
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="card-title">شقة فاخرة – حي المعاريف</div>
+            <div class="card-location">📍 الدار البيضاء – المعاريف</div>
+            <div class="card-specs">
+              <div class="spec">🛏 3 غرف</div>
+              <div class="spec">🚿 2 حمام</div>
+              <div class="spec">📐 120 م²</div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="price">1,450,000 MAD</div>
+            <div class="card-actions">
+              <button class="icon-btn">🤍</button>
+              <button class="icon-btn">📞</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="property-card">
+        <div class="card-img">
+          <div class="card-img-inner img-villa">🏡</div>
+          <span class="card-tag tag-sell">بيع</span>
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="card-title">فيلا بحديقة – أكدال</div>
+            <div class="card-location">📍 الرباط – أكدال</div>
+            <div class="card-specs">
+              <div class="spec">🛏 5 غرف</div>
+              <div class="spec">🚿 4 حمام</div>
+              <div class="spec">📐 320 م²</div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="price">3,200,000 MAD</div>
+            <div class="card-actions">
+              <button class="icon-btn">🤍</button>
+              <button class="icon-btn">📞</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="property-card">
+        <div class="card-img">
+          <div class="card-img-inner img-apt">🏢</div>
+          <span class="card-tag tag-rent">كراء</span>
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="card-title">شقة للكراء – غوثييه</div>
+            <div class="card-location">📍 الدار البيضاء – غوثييه</div>
+            <div class="card-specs">
+              <div class="spec">🛏 2 غرف</div>
+              <div class="spec">🚿 1 حمام</div>
+              <div class="spec">📐 85 م²</div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="price">6,500 MAD/شهر</div>
+            <div class="card-actions">
+              <button class="icon-btn">🤍</button>
+              <button class="icon-btn">💬</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="property-card">
+        <div class="card-img">
+          <div class="card-img-inner img-land">🌿</div>
+          <span class="card-tag tag-sell">بيع</span>
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="card-title">أرض للبناء – يوسفية</div>
+            <div class="card-location">📍 مراكش – يوسفية</div>
+            <div class="card-specs">
+              <div class="spec">📐 500 م²</div>
+              <div class="spec">🏗 قابل للبناء</div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="price">850,000 MAD</div>
+            <div class="card-actions">
+              <button class="icon-btn">🤍</button>
+              <button class="icon-btn">📞</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="property-card">
+        <div class="card-img">
+          <div class="card-img-inner img-shop">🏪</div>
+          <span class="card-tag tag-rent">كراء</span>
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="card-title">محل تجاري – زنقة مولاي يوسف</div>
+            <div class="card-location">📍 فاس – البال</div>
+            <div class="card-specs">
+              <div class="spec">📐 60 م²</div>
+              <div class="spec">🏢 طابق أرضي</div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="price">12,000 MAD/شهر</div>
+            <div class="card-actions">
+              <button class="icon-btn">🤍</button>
+              <button class="icon-btn">💬</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features">
+  <h2 class="section-title">لماذا <span style="background:linear-gradient(135deg,#A78BFA,#60A5FA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Aqario</span>؟</h2>
+  <p class="section-sub">ليس مجرد موقع إعلانات، بل منصة ثقة وذكاء عقاري</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🤖</div>
+      <h4>منع التكرار الذكي</h4>
+      <p>خوارزمية تطابق الصور والموقع لمنع تكرار نفس العقار</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🗺️</div>
+      <h4>خريطة تفاعلية أولاً</h4>
+      <p>اعثر على عقارك على الخريطة قبل القائمة</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✅</div>
+      <h4>توثيق الملاك</h4>
+      <p>هوية + هاتف + وثيقة الملكية لكل إعلان</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💡</div>
+      <h4>تقدير السعر العادل</h4>
+      <p>سعر مقدَّر بالذكاء الاصطناعي بناءً على المنطقة</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>انشر إعلانك خلال 60 ثانية ⚡</h2>
+  <p>تجربة نشر سريعة وحديثة، بدون تعقيدات</p>
+  <div class="cta-btns">
+    <button class="btn-large primary">+ نشر إعلان مجاني</button>
+    <button class="btn-large outline">تصفح الخريطة</button>
+  </div>
+</div>
+
+<!-- TRUST -->
+<div class="trust-badges">
+  <div class="trust-item"><span>✓</span> عقارات موثّقة</div>
+  <div class="trust-item"><span>✓</span> لا إعلانات مكررة</div>
+  <div class="trust-item"><span>✓</span> سعر عادل مضمون</div>
+  <div class="trust-item"><span>✓</span> تواصل مباشر مع المالك</div>
+  <div class="trust-item"><span>✓</span> مناسب للمغاربة في الخارج</div>
+</div>
+
+</body>
+</html>
